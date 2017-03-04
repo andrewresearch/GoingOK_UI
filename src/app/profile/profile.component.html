@@ -18,10 +18,13 @@
         <div id="goingokMessage" class="panel-body small">
 
           <!--<p>Slider: {{ sliderVal$ | async }} </p>-->
-          <button (click)="increment()">+</button>
-          <button (click)="decrement()">-</button>
-          <button (click)="reset()">!!</button>
-          <p>Counter: {{ counter | async }} </p>
+          <!--<button (click)="increment()">+</button>-->
+          <!--<button (click)="decrement()">-</button>-->
+          <p>Point: {{ readThePoint() | async }} </p>
+          <p>Text: {{ readTheText() | async }}</p>
+          <p>Store: {{ readStore() | async }}</p>
+          <button (click)="loadHistoric()"> load reflections </button>
+
 
 
           <p></p>

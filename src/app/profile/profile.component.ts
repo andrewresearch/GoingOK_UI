@@ -8,13 +8,13 @@ import {ReflectionChartComponent} from './reflectionChart/reflectionChart.compon
 
 
 import { Store } from '@ngrx/store';
-import { INCREMENT, DECREMENT, RESET } from '../reducers/counter';
+import {SET_POINT, LOAD_PREV} from '../store/reflection.store';
 import {Observable} from "rxjs";
+import {ReflectionStore, Reflection, ReflectionEntry} from "../data/ReflectionStore";
 
 interface AppState {
-    counter: number;
+    reflection: ReflectionStore;
 }
-
 
 @Component({
     selector: 'profile',
@@ -24,22 +24,38 @@ interface AppState {
 })
 
 export class ProfileComponent {
-    counter: Observable<number>;
+
+    reflection: Observable<ReflectionStore>;
 
     constructor(private store: Store<AppState>){
-        this.counter = store.select('counter');
+        this.reflection = store.select('reflectionStore');
+        this.loadHistoric();
     }
 
-    increment(){
-        this.store.dispatch({ type: INCREMENT });
+    readThePoint():Observable<number> {
+     return this.reflection.map( r => r.currentEntry.reflection.point)
+    }
+    readTheText():Observable<string> {
+        return this.reflection.map( r => r.currentEntry.reflection.text)
     }
 
-    decrement(){
-        this.store.dispatch({ type: DECREMENT });
+    set() {
+        this.store.dispatch({ type: SET_POINT, payload: 59 });
     }
 
-    reset(){
-        this.store.dispatch({ type: RESET });
+    loadHistoric() {
+        let store = new ReflectionStore()
+        store.reflectionEntries = this.refChartData.reverse().map( r => {
+                let entry = new ReflectionEntry();
+                entry.timestamp = r.timestamp;
+                entry.reflection = r.reflection;
+                return entry;
+        })
+        this.store.dispatch({ type: LOAD_PREV, payload: store });
+    }
+
+    readStore():Observable<string> {
+        return this.reflection.map(r => JSON.stringify(r))
     }
 
 

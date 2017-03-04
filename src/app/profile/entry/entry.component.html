@@ -37,9 +37,9 @@
             <!--{{settings.rb_text_question}}-->
           </h5>
           <!--<textarea class="col-xs-12" id="describe" name="describe" rows="4" placeholder="{{settings.rb_text_prompt}}"></textarea>-->
-          <textarea class="col-xs-12" id="describe" name="describe" rows="4" placeholder=""></textarea>
+          <textarea class="col-xs-12" id="describe" name="describe" rows="10" placeholder="" [(ngModel)]="reflectText"></textarea>
           <div>&nbsp;</div>
-          <div><button type="submit" class="btn btn-success pull-right">Save
+          <div><button type="submit" class="btn btn-success pull-right" (click)="setTheText()">Save
             <!--{{settings.rb_button}}-->
           </button></div>
         </div>

@@ -8,7 +8,7 @@ import { ROUTING } from './app.routes'
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './reducers/counter';
+import { reflectionReducer } from './store/reflection.store';
 
 //Components
 import { AppComponent } from './app.component';
@@ -57,7 +57,7 @@ import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.compone
     ROUTING,
     FormsModule,
     HttpModule,
-    StoreModule.provideStore({ counter: counterReducer }),
+    StoreModule.provideStore({ reflectionStore: reflectionReducer }),
     //AlertModule, //Demo for ng2-bootstrap
   ],
   providers: [], //[CounterActions],
