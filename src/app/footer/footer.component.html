@@ -1,0 +1,254 @@
+
+<!--<div class="row">-->
+  <!--<div class="col-sm-4">-->
+    <!--<div th:fragment="footer1" class="panel panel-default">-->
+      <!--<div class="panel-heading">-->
+        <!--<h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Account</h3>-->
+      <!--</div>-->
+      <!--<div class="panel-body">-->
+        <!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
+        <!--<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#passwordModel">-->
+          <!--Change Password-->
+        <!--</button>-->
+        <!--<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#emailModel">-->
+          <!--Change Email-->
+        <!--</button>-->
+
+        <!--<div class="modal fade" id="passwordModel" tabindex="-1" role="dialog" aria-labelledby="passwordModel" aria-hidden="true">-->
+          <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title">Change your GoingOK password</h4>-->
+              <!--</div>-->
+              <!--<form class="form-horizontal" role="form" th:action="@{/account/changePassword}" method="post">-->
+                <!--<div class="modal-body">-->
+
+                  <!--<div class="form-group">-->
+                    <!--<label for="subject" class="col-sm-4 control-label">Old Password:</label>-->
+                    <!--<div class="col-sm-8">-->
+                      <!--<input type="password" class="form-control" id="oldPassword" name="oldPassword" />-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="subject" class="col-sm-4 control-label">New Password:</label>-->
+                    <!--<div class="col-sm-8">-->
+                      <!--<input type="password" class="form-control" id="newPassword1" name="newPassword1" />-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="subject" class="col-sm-4 control-label">Confirm password:</label>-->
+                    <!--<div class="col-sm-8">-->
+                      <!--<input type="password" class="form-control" id="newPassword2" name="newPassword2" />-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+
+
+                  <!--<input type="hidden" th:name = "id" th:value="${userData?.id}" />-->
+                  <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" name="${_csrf.parameterName}" th:value="${_csrf.token}" value="${_csrf.token}" />&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                  <!--<button type="submit" class="btn btn-primary">Change</button>-->
+                <!--</div>-->
+              <!--</form>-->
+            <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+          <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+
+        <!--<div class="modal fade" id="emailModel" tabindex="-1" role="dialog" aria-labelledby="emailModel" aria-hidden="true">-->
+          <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title">Change your email address</h4>-->
+              <!--</div>-->
+              <!--<form class="form-horizontal" role="form" th:action="@{/account/changeEmail}" method="post">-->
+                <!--<div class="modal-body">-->
+                  <!--<div class="well">-->
+                    <!--An email will be sent to your new address, to confirm before the change is made. Please note that changing your email address will also change your login, as you use your email address to login to GoingOK.-->
+                  <!--</div>-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="subject" class="col-sm-2 control-label">Email:</label>-->
+                    <!--<div class="col-sm-10">-->
+                      <!--<input type="text" class="form-control" id="email" placeholder="new@email.address" name="email" />-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+
+
+                  <!--<input type="hidden" th:name = "id" th:value="${userData?.id}" />-->
+                  <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" name="${_csrf.parameterName}" th:value="${_csrf.token}" value="${_csrf.token}" />&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                  <!--<button type="submit" class="btn btn-primary">Change</button>-->
+                <!--</div>-->
+              <!--</form>-->
+            <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+          <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="col-sm-4">-->
+    <!--<div th:fragment="footer2" class="panel panel-default">-->
+      <!--<div class="panel-heading">-->
+        <!--<h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Profile</h3>-->
+      <!--</div>-->
+      <!--<div class="panel-body">-->
+        <!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
+        <!--<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#reminderModel">-->
+          <!--Change Reminder Settings-->
+        <!--</button>-->
+        <!--<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModel">-->
+          <!--Change Profile Settings-->
+        <!--</button>-->
+
+        <!--<div class="modal fade" id="reminderModel" tabindex="-1" role="dialog" aria-labelledby="reminderModel" aria-hidden="true">-->
+          <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title">Change the frequency of your reminders</h4>-->
+              <!--</div>-->
+              <!--<form class="form-horizontal" role="form" action="#" method="post">-->
+                <!--<div class="modal-body">-->
+                  <!--<div class="well">-->
+                    <!--This feature is not implemented yet - Sorry. Use the Contact GoingOK button to send us a message requesting the change to your reminders.-->
+                  <!--</div>-->
+                  <!--<input type="hidden" th:name = "id" th:value="${userData?.id}" />-->
+                  <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" name="${_csrf.parameterName}" th:value="${_csrf.token}" value="${_csrf.token}" />&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                  <!--<button type="submit" class="btn btn-primary disabled">Change</button>-->
+                <!--</div>-->
+              <!--</form>-->
+            <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+          <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+
+        <!--<div class="modal fade" id="profileModel" tabindex="-1" role="dialog" aria-labelledby="profileModel" aria-hidden="true">-->
+          <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title">Change settings for the profile page</h4>-->
+              <!--</div>-->
+              <!--<form class="form-horizontal" role="form" action="#" method="post">-->
+                <!--<div class="modal-body">-->
+                  <!--<div class="well">-->
+                    <!--This is not implemented yet - Sorry.-->
+                  <!--</div>-->
+                  <!--<input type="hidden" th:name = "id" th:value="${userData?.id}" />-->
+                  <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" name="${_csrf.parameterName}" th:value="${_csrf.token}" value="${_csrf.token}" />&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                  <!--<button type="submit" class="btn btn-primary disabled">Change</button>-->
+                <!--</div>-->
+              <!--</form>-->
+            <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+          <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="col-sm-4">-->
+    <!--<div th:fragment="footer3" class="panel panel-default">-->
+      <!--<div class="panel-heading">-->
+        <!--<h3 class="panel-title"><span class="glyphicon glyphicon-envelope"></span> Contact</h3>-->
+      <!--</div>-->
+      <!--<div class="panel-body">-->
+        <!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
+        <!--<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#contactModel">-->
+          <!--Contact GoingOK-->
+        <!--</button>-->
+
+        <!--<div class="modal fade" id="contactModel" tabindex="-1" role="dialog" aria-labelledby="contactModel" aria-hidden="true">-->
+          <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title">Send a message to GoingOK</h4>-->
+              <!--</div>-->
+              <!--<form class="form-horizontal" role="form" th:action="@{/profile/message}" method="post">-->
+                <!--<div class="modal-body">-->
+
+                  <!--<div class="form-group">-->
+                    <!--<label for="subject" class="col-sm-2 control-label">Subject:</label>-->
+                    <!--<div class="col-sm-10">-->
+                      <!--<input type="text" class="form-control" id="subject" placeholder="Brief reason for contact" name="subject" />-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+                  <!--<div class="form-group">-->
+                    <!--<label for="message" class="col-sm-2 control-label">Message:</label>-->
+                    <!--<div class="col-sm-10">-->
+                      <!--<textarea class="col-sm-12" id="message" name="message" rows="6" placeholder="Write your message here"></textarea>-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+                  <!--<input type="hidden" th:name = "id" th:value="${userData?.id}" />-->
+                  <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" name="${_csrf.parameterName}" th:value="${_csrf.token}" value="${_csrf.token}" />&ndash;&gt;-->
+
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                  <!--<button type="submit" class="btn btn-primary">Send Message</button>-->
+                <!--</div>-->
+              <!--</form>-->
+            <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+          <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <!--</div>-->
+<!--</div>-->
+
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <!--<div class="navbar-header">-->
+      <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">-->
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+      <!--</button>-->
+      <!--<a class="goingok-font navbar-brand" href="http://www.goingok.com/"><img src="/assets/img/GoingOK_Logo_small_transparent.png" height="40" style="vertical-align:top" /></a>-->
+    <!--</div>-->
+    <!-- Main toggled nav content -->
+    <!--<div class="collapse navbar-collapse" id="navbar-collapse-1">-->
+      <!--<ul class="nav navbar-nav">-->
+        <!--&lt;!&ndash;<li th:class="${home}"><a th:href="@{/}" href="/">Home</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li th:class="${profile}"><a th:href="@{/profile}" href="/profile">Profile &nbsp;<span class="badge pull-right" th:text="${count}">17</span></a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li th:if="${userData?.isGuide}" th:class="${guide}"> <a th:href="@{/profile/guide}"> Guide</a></li>&ndash;&gt;-->
+        <!--<li></li>-->
+
+        <!--&lt;!&ndash;<li th:class="${about}"><a th:href="@{/about}" href="/about">About</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li th:if="${userData.isAdmin}" th:class="${admin}"> <a th:href="@{/admin}"> Admin</a></li>&ndash;&gt;-->
+      <!--</ul>-->
+
+      <!--&lt;!&ndash;<ul class="nav navbar-nav navbar-right">&ndash;&gt;-->
+        <!--&lt;!&ndash;<li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<a href="#"><small><span style="color:#00CC22;">For access please >>> </span></small></a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<a href="/login">&nbsp;&nbsp;Login</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+    <!--</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
+  </div><!-- /.container-fluid -->
+</nav>

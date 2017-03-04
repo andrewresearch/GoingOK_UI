@@ -1,0 +1,11 @@
+#reflectionBox {
+  height: 180px;
+  overflow: -moz-scrollbars-vertical;
+  overflow: scroll;
+}
+
+#goingokMessage {
+  height: 220px;
+  overflow: -moz-scrollbars-vertical;
+  overflow: scroll;
+}

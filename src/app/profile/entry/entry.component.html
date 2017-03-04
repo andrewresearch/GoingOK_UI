@@ -1,0 +1,50 @@
+
+<div class="panel panel-success">
+  <!--<script type="text/javascript" th:src="${staticFilesUrl+'js/dragdealer.js'}"></script>-->
+  <div class="panel-heading">
+    <b class="panel-title"><span class="glyphicon glyphicon-pencil">&nbsp;</span>Enter a reflection
+      <!--{{settings.rb_heading}}-->
+    </b>
+    <span id="reflectionHelp" class="glyphicon glyphicon-question-sign pull-right btn btn-default" data-container="body" data-toggle="popover" data-placement="left">
+    		</span>
+  </div>
+  <div class="panel-body">
+    <form  class="form-horizontal" id="form" name="form" method="post">
+      <div class="row">
+        <div class="col-xs-12">
+          <input id="point" name="point" type="hidden" value="50" />
+          <div class="top-spaced">
+            <!--<dragdealer></dragdealer>-->
+            <slider></slider>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><div style="text-align: left"><h5>Distressed
+          <!--{{settings.rb_label_0}}-->
+        </h5></div></div>
+        <div class="col-xs-4"><div style="text-align: center"><h5>GoingOK
+          <!--{{settings.rb_label_50}}-->
+        </h5></div></div>
+        <div class="col-xs-4"><div style="text-align: right"><h5>Soaring
+          <!--{{settings.rb_label_100}}-->
+        </h5></div></div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Describe how you are going...
+            <!--{{settings.rb_text_question}}-->
+          </h5>
+          <!--<textarea class="col-xs-12" id="describe" name="describe" rows="4" placeholder="{{settings.rb_text_prompt}}"></textarea>-->
+          <textarea class="col-xs-12" id="describe" name="describe" rows="4" placeholder=""></textarea>
+          <div>&nbsp;</div>
+          <div><button type="submit" class="btn btn-success pull-right">Save
+            <!--{{settings.rb_button}}-->
+          </button></div>
+        </div>
+      </div>
+      <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" name="${_csrf.parameterName}" th:value="${_csrf.token}" value="${_csrf.token}" />&ndash;&gt;-->
+    </form>
+  </div>
+</div>

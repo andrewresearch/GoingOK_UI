@@ -1,0 +1,41 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar">Test</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="goingok-font navbar-brand" href="/"><img src="/assets/img/GoingOK_Logo_small_transparent.png" height="40" style="vertical-align:top" /></a>
+    </div>
+    <!-- Main toggled nav content -->
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!--<li th:class="${home}"><a th:href="@{/}" href="/">Home</a></li>-->
+        <!--<li th:class="${profile}"><a th:href="@{/profile}" href="/profile">Profile &nbsp;<span class="badge pull-right" th:text="${count}">17</span></a></li>-->
+        <!--<li th:if="${userData?.isGuide}" th:class="${guide}"> <a th:href="@{/profile/guide}"> Guide</a></li>-->
+        <li></li>
+
+        <!--<li th:class="${about}"><a th:href="@{/about}" href="/about">About</a></li>-->
+        <!--<li th:if="${userData.isAdmin}" th:class="${admin}"> <a th:href="@{/admin}"> Admin</a></li>-->
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <!--<a href="#"><small><span style="color:#00CC22;">For access please >>> </span></small></a>-->
+          <a href="http://demo.goingok.org/login">&nbsp;&nbsp;{{demoButtonText}}</a>
+        </li>
+        <li>
+          <login></login>
+          <!--<a href="/login">&nbsp;&nbsp;{{loginButtonText}}</a>-->
+        </li>
+        <li>
+          &nbsp;
+        </li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
