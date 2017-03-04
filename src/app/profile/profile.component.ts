@@ -6,37 +6,58 @@ import {Component} from '@angular/core';
 import {EntryComponent} from './entry/entry.component';
 import {ReflectionChartComponent} from './reflectionChart/reflectionChart.component'
 
-//Redux
-// import { NgRedux, select } from '@angular-redux/store';
-// import { CounterActions } from '../actions/counter.actions';
-// import {IAppState} from "../../store";
-// import { Observable } from 'rxjs/Observable';
 
+import { Store } from '@ngrx/store';
+import {SET_POINT, LOAD_PREV} from '../store/reflection.store';
+import {Observable} from "rxjs";
+import {ReflectionStore, Reflection, ReflectionEntry} from "../data/ReflectionStore";
+
+interface AppState {
+    reflection: ReflectionStore;
+}
 
 @Component({
     selector: 'profile',
-    providers: [EntryComponent,ReflectionChartComponent], //,CounterActions],
+    providers: [EntryComponent,ReflectionChartComponent],
     templateUrl: 'profile.component.html',
     styleUrls: ['profile.component.css'],
 })
 
 export class ProfileComponent {
-    //readonly count$: Observable<number>;
-    //subscription;
-    //@select('count') readonly count$: Observable<number>;
-    //@select('sliderVal') readonly sliderVal$: Observable<number>;
 
-    // constructor(private ngRedux: NgRedux<IAppState>,private actions: CounterActions) {
-    //     //this.count$ = ngRedux.select<number>('count');
-    // }
+    reflection: Observable<ReflectionStore>;
 
-    increment() {
-        //this.ngRedux.dispatch(this.actions.increment());
+    constructor(private store: Store<AppState>){
+        this.reflection = store.select('reflectionStore');
+        this.loadHistoric();
     }
 
-    decrement() {
-        //this.ngRedux.dispatch(this.actions.decrement());
+    readThePoint():Observable<number> {
+     return this.reflection.map( r => r.currentEntry.reflection.point)
     }
+    readTheText():Observable<string> {
+        return this.reflection.map( r => r.currentEntry.reflection.text)
+    }
+
+    set() {
+        this.store.dispatch({ type: SET_POINT, payload: 59 });
+    }
+
+    loadHistoric() {
+        let store = new ReflectionStore()
+        store.reflectionEntries = this.refChartData.reverse().map( r => {
+                let entry = new ReflectionEntry();
+                entry.timestamp = r.timestamp;
+                entry.reflection = r.reflection;
+                return entry;
+        })
+        this.store.dispatch({ type: LOAD_PREV, payload: store });
+    }
+
+    readStore():Observable<string> {
+        return this.reflection.map(r => JSON.stringify(r))
+    }
+
 
     refChartData =  [
 { timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},

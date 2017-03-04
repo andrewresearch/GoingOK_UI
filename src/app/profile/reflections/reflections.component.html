@@ -1,15 +1,16 @@
-<div class="panel panel-success">
+
+<div id="reflection-list" class="panel panel-success">
   <div class="panel-heading">
     <b class="panel-title"><span class="glyphicon glyphicon-th-list"></span> Past Reflections</b><span class="pull-right"><a href="/profile/records/csv"><span class="glyphicon glyphicon-download btn btn-default"></span></a>
     	<span id="reflectionListHelp" class="glyphicon glyphicon-question-sign btn btn-default" data-container="body" data-toggle="popover" data-placement="left"></span></span>
   </div>
   <div class="panel-body">
-    <div id="reflectionBox">
+    <div id="reflection-box">
       <div *ngIf='dataLoaded'>
         <!--<div>Records: {{records}}</div>-->
-        <div *ngFor="let record of records">
+        <div *ngFor="let entry of readEntries() | async">
           <!--<div>Record: {{record}}</div>-->
-          <span class="badge">{{record.reflection.point}}</span> &nbsp;&nbsp;<b>{{record.timestamp | date:'dd MMM yyyy'}}</b>&nbsp;&nbsp;<span>{{record.reflection.text}}</span>
+          <span class="badge">{{entry.reflection.point}}</span> &nbsp;&nbsp;<b>{{entry.timestamp | date:'dd MMM yyyy'}}</b>&nbsp;&nbsp;<span>{{entry.reflection.text}}</span>
           <hr />
         </div>
       </div>
@@ -27,3 +28,4 @@
 
   </div>
 </div>
+<div class="footer-pad">&nbsp;</div>

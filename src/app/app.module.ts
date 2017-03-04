@@ -6,11 +6,9 @@ import { HttpModule } from '@angular/http';
 import { AlertModule } from 'ng2-bootstrap'; //Demo for ng2-bootstrap
 import { ROUTING } from './app.routes'
 
-//Redux
-// import { NgReduxModule, NgRedux } from '@angular-redux/store';
-// import { rootReducer, IAppState, INITIAL_STATE } from '../store'; // < New
-// import { CounterActions } from './actions/counter.actions'; // <- New
-
+//ngrx
+import { StoreModule } from '@ngrx/store';
+import { reflectionReducer } from './store/reflection.store';
 
 //Components
 import { AppComponent } from './app.component';
@@ -59,19 +57,12 @@ import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.compone
     ROUTING,
     FormsModule,
     HttpModule,
-    //NgReduxModule,
+    StoreModule.provideStore({ reflectionStore: reflectionReducer }),
     //AlertModule, //Demo for ng2-bootstrap
   ],
   providers: [], //[CounterActions],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  // constructor(ngRedux: NgRedux<IAppState>) {
-  //   // Tell @angular-redux/store about our rootReducer and our initial state.
-  //   // It will use this to create a redux store for us and wire up all the
-  //   // events.
-  //   ngRedux.configureStore(
-  //       rootReducer,
-  //       INITIAL_STATE);
-  // }
+
 }
