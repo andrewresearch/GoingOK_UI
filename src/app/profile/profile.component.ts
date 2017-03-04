@@ -6,37 +6,42 @@ import {Component} from '@angular/core';
 import {EntryComponent} from './entry/entry.component';
 import {ReflectionChartComponent} from './reflectionChart/reflectionChart.component'
 
-//Redux
-// import { NgRedux, select } from '@angular-redux/store';
-// import { CounterActions } from '../actions/counter.actions';
-// import {IAppState} from "../../store";
-// import { Observable } from 'rxjs/Observable';
+
+import { Store } from '@ngrx/store';
+import { INCREMENT, DECREMENT, RESET } from '../reducers/counter';
+import {Observable} from "rxjs";
+
+interface AppState {
+    counter: number;
+}
 
 
 @Component({
     selector: 'profile',
-    providers: [EntryComponent,ReflectionChartComponent], //,CounterActions],
+    providers: [EntryComponent,ReflectionChartComponent],
     templateUrl: 'profile.component.html',
     styleUrls: ['profile.component.css'],
 })
 
 export class ProfileComponent {
-    //readonly count$: Observable<number>;
-    //subscription;
-    //@select('count') readonly count$: Observable<number>;
-    //@select('sliderVal') readonly sliderVal$: Observable<number>;
+    counter: Observable<number>;
 
-    // constructor(private ngRedux: NgRedux<IAppState>,private actions: CounterActions) {
-    //     //this.count$ = ngRedux.select<number>('count');
-    // }
-
-    increment() {
-        //this.ngRedux.dispatch(this.actions.increment());
+    constructor(private store: Store<AppState>){
+        this.counter = store.select('counter');
     }
 
-    decrement() {
-        //this.ngRedux.dispatch(this.actions.decrement());
+    increment(){
+        this.store.dispatch({ type: INCREMENT });
     }
+
+    decrement(){
+        this.store.dispatch({ type: DECREMENT });
+    }
+
+    reset(){
+        this.store.dispatch({ type: RESET });
+    }
+
 
     refChartData =  [
 { timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},
