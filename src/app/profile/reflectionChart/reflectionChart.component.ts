@@ -2,12 +2,13 @@
  * Created by andrew on 6/06/2016.
  */
 
-import { Component, OnInit,Input,ElementRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,Input,ElementRef,ViewEncapsulation, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import {
     curveLinear, curveBasisOpen, curveCatmullRomOpen, curveStep, curveCatmullRom, curveBasis,
     curveMonotoneX
 } from "d3-shape";
+import {ReflectionEntry} from "../../data/ReflectionStore";
 
 @Component({
     selector: 'reflection-chart',
@@ -15,9 +16,9 @@ import {
     styleUrls: ['reflectionChart.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class ReflectionChartComponent implements OnInit {
+export class ReflectionChartComponent implements OnInit,OnChanges {
 
-    @Input('chartdata') chartdata;
+    @Input('chartdata') chartdata:ReflectionEntry[];
     //chartData = [
 // { timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},
 // { timestamp:"2016-11-02T12:00:00", reflection:{ point: 100.0, text:"This is some text too."}},
@@ -25,20 +26,40 @@ export class ReflectionChartComponent implements OnInit {
 // { timestamp:"2016-11-05T10:00:00", reflection:{ point: 75.5, text:"Final text."}}
 // ];
 
-    constructor(private elRef: ElementRef) { }
+    chartDataSize = 0;
+
+    getChartData() {
+        //this.buildChart(this.elRef,this.chartdata);
+        return JSON.stringify(this.chartdata);
+    }
+
+    constructor() {} //(private elRef: ElementRef) {}
 
     ngOnInit() {
     }
 
+    ngDoCheck() {
+        if (this.chartdata.length != this.chartDataSize) {
+            this.chartDataSize = this.chartdata.length;
+            //this.buildChart(this.elRef,this.chartdata);
+            this.buildChart(this.chartdata);
+        }
+    }
+    ngOnChanges() {
+
+    }
+
+
     ngAfterViewInit() {
-        this.buildChart(this.elRef,this.chartdata);
+        //this.buildChart(this.elRef,this.chartdata);
+        this.buildChart(this.chartdata);
     }
 
 
 
-    public buildChart(elRef: ElementRef,chartdata) {
+    public buildChart(chartdata) { //(elRef: ElementRef,chartdata) {
 
-        var element = elRef.nativeElement;
+        //var element = elRef.nativeElement;
         var svg = null;
 
         var data:DatePoint[] = chartdata.map( r =>  {
@@ -73,7 +94,9 @@ export class ReflectionChartComponent implements OnInit {
             .tickValues([0,25,50,75,100])
             .tickFormat(function(d) { return labels.get(d);});
 
-        if(!svg) {
+
+        d3.select("svg").remove();
+
             svg = d3.select("div#container")
                 .append("svg")
                 .attr("preserveAspectRatio", "xMinYMin meet")
@@ -86,7 +109,7 @@ export class ReflectionChartComponent implements OnInit {
             //     //.attr("height", h + margin.top + margin.bottom)
             //     .append("g")
             //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        }
+
 
         svg.append("g")
             .attr("class", "x axis")

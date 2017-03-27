@@ -12,7 +12,7 @@ const routes: Routes = [
     { path: 'projects/transition2teaching', component: T2tComponent },
     { path: 'projects', component: ProjectsComponent },
     { path: 'profile',component: ProfileComponent },
-
+    { path: 'about', component: AboutComponent },
     { path: '', component: AboutComponent },
     { path: 'errors/404', component: PageNotFoundComponent },
     { path: '**', component: PageNotFoundComponent }

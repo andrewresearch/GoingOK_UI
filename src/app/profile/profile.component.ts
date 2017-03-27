@@ -26,9 +26,11 @@ interface AppState {
 export class ProfileComponent {
 
     reflection: Observable<ReflectionStore>;
+    entries: Observable<ReflectionEntry[]>;
 
     constructor(private store: Store<AppState>){
         this.reflection = store.select('reflectionStore');
+        this.entries = this.reflection.map(r => r.reflectionEntries);
         this.loadHistoric();
     }
 
@@ -45,17 +47,25 @@ export class ProfileComponent {
 
     loadHistoric() {
         let store = new ReflectionStore()
-        store.reflectionEntries = this.refChartData.reverse().map( r => {
+        store.reflectionEntries = this.refChartData.map( r => {
                 let entry = new ReflectionEntry();
                 entry.timestamp = r.timestamp;
                 entry.reflection = r.reflection;
                 return entry;
         })
+        let entry = new ReflectionEntry();
+        entry.reflection.text = "Test entry";
+        entry.reflection.point = 0.0;
+        store.reflectionEntries = store.reflectionEntries.concat(entry).reverse();
         this.store.dispatch({ type: LOAD_PREV, payload: store });
     }
 
     readStore():Observable<string> {
         return this.reflection.map(r => JSON.stringify(r))
+    }
+
+    getEntries():Observable<ReflectionEntry[]> {
+        return this.reflection.map(r => r.reflectionEntries)
     }
 
 

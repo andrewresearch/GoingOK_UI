@@ -9,7 +9,9 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class DataService {
-    constructor (private http: Http) {}
+    constructor (private http: Http) {
+
+    }
 
     private apiUrl = 'http://localhost:8080/v1';
     private gokSession:string = "";
