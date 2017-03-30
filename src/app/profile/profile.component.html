@@ -1,31 +1,27 @@
 
 <div class="row-fluid">
   <div class = "col-sm-12">
-    <reflection-chart [chartdata]="entries | async"></reflection-chart>
+    <reflection-chart [reflections]="reflections"></reflection-chart>
   </div>
 </div>
 <div>
   <div class="row-fluid">
     <!--<div class="col-sm-1"></div>-->
     <div class="col-sm-8">
-      <entry></entry>
-      <reflections></reflections>
+      <entry (notify)='onNotify($event)'></entry>
+      <reflection-list [reflections]="reflections"></reflection-list>
 
     </div>
     <div class="col-sm-4">
       <div class="panel panel-info">
-        <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-bullhorn"></span> GoingOK News</h5></div>
+        <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-bullhorn"></span> GoingOK Messages</h5></div>
         <div id="goingokMessage" class="panel-body small">
 
-          <!--<p>Slider: {{ sliderVal$ | async }} </p>-->
-          <!--<button (click)="increment()">+</button>-->
-          <!--<button (click)="decrement()">-</button>-->
-          <p>Point: {{ readThePoint() | async }} </p>
-          <p>Text: {{ readTheText() | async }}</p>
-          <p>Store: {{ readStore() | async }}</p>
           <button (click)="loadHistoric()"> load reflections </button>
-
-
+          <p></p>
+          <p>Point: {{ currentReflection.point }} </p>
+          <p>Text: {{ currentReflection.text }}</p>
+          <p>Reflections: {{ getReflections() }}</p>
 
           <p></p>
           <p><strong>Welcome</strong></p>

@@ -3,12 +3,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AlertModule } from 'ng2-bootstrap'; //Demo for ng2-bootstrap
-import { ROUTING } from './app.routes'
+//import { AlertModule } from 'ng2-bootstrap'; //Demo for ng2-bootstrap
+import { ROUTING } from './app.routes';
+
+//Guards
+import {AuthGuard} from './shared/AuthGuardService';
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
-import { reflectionReducer } from './store/reflection.store';
+import {EffectsModule} from "@ngrx/effects";
+import reducer from './store/reducers';
+import {UserActions,ReflectionsActions} from "./store/actions";
+import {UserService,ReflectionsService} from "./store/services";
+import {UserEffects,ReflectionsEffects} from "./store/effects";
 
 //Components
 import { AppComponent } from './app.component';
@@ -32,6 +39,11 @@ import { ReflectionsComponent } from './profile/reflections/reflections.componen
 import {ProjectsComponent} from "./projects/projects.component";
 import {T2tComponent} from "./projects/t2t/t2t.component";
 import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.component";
+import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
+
+
+
+
 
 
 @NgModule({
@@ -57,10 +69,12 @@ import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.compone
     ROUTING,
     FormsModule,
     HttpModule,
-    StoreModule.provideStore({ reflectionStore: reflectionReducer }),
+    StoreModule.provideStore(reducer),
+    EffectsModule.run(UserEffects),
+    EffectsModule.run(ReflectionsEffects)
     //AlertModule, //Demo for ng2-bootstrap
   ],
-  providers: [], //[CounterActions],
+  providers: [AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions],
   bootstrap: [AppComponent]
 })
 export class AppModule {

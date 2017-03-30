@@ -1,19 +1,62 @@
 /**
  * Created by andrew on 3/3/17.
  */
+
 import { Injectable }     from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import {User} from '../models';
+
+
 @Injectable()
-export class DataService {
+export class UserService {
+
+
     constructor (private http: Http) {
 
     }
 
-    private apiUrl = 'http://localhost:8080/v1';
+    private API_URL = 'http://localhost:8080/v1';
+    private  USER_URL = this.API_URL + '/user';
+    private AUTH_URL = this.API_URL + '/client/auth';
+
+    checkConnect(): Observable<any> {
+        console.log("Checking connection");
+        return this.http.get(this.API_URL)
+            .map(res => res.json())
+    }
+
+    authUser(token): Observable<User> {
+        console.log("Authorising user");
+        return this.http.post(this.AUTH_URL,token)
+            .map(res => res.json());
+    }
+
+    getUser(id): Observable<User> {
+        console.log("user service - getUser");
+        return this.http.get(this.USER_URL+'/'+ id)
+            .map(res => res.json());
+    }
+
+    saveUser(user) {
+        if (user.id === 0) {
+            return this.http.post(this.USER_URL, user)
+                .map(res => res.json());
+        } else {
+            return this.http.put(this.USER_URL+'/' + user.id, user)
+                .map(res => res.json());
+        }
+    }
+
+    deleteUser(user) {
+        return this.http.delete(this.USER_URL+'/' + user.id)
+            .map(res => user);
+    }
+
+
     private gokSession:string = "";
     private gidToken:string = "";
     private SET_AUTH = "Set-Authorization"
@@ -29,11 +72,11 @@ export class DataService {
         this.authHeader.append(this.AUTH, session);
     }
 
-    private postToServer(subpath:String,str:String) { return this.http.post(this.apiUrl + subpath,str) }
+    private postToServer(subpath:String,str:String) { return this.http.post(this.API_URL + subpath,str) }
 
     private getFromServer(subpath:String) {
         let options = new RequestOptions({ headers: this.authHeader });
-        return this.http.get(this.apiUrl + subpath,options)
+        return this.http.get(this.API_URL + subpath,options)
     }
 
     private authorise() { return this.postToServer('/client/auth', this.gidToken) }

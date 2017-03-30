@@ -1,4 +1,5 @@
 
+<!--<div>Reflection Entries: {{ getReflections() }}</div>-->
 <div id="reflection-list" class="panel panel-success">
   <div class="panel-heading">
     <b class="panel-title"><span class="glyphicon glyphicon-th-list"></span> Past Reflections</b><span class="pull-right"><a href="/profile/records/csv"><span class="glyphicon glyphicon-download btn btn-default"></span></a>
@@ -6,9 +7,9 @@
   </div>
   <div class="panel-body">
     <div id="reflection-box">
-      <div *ngIf='dataLoaded'>
+      <div *ngIf='dataLoaded()'>
         <!--<div>Records: {{records}}</div>-->
-        <div *ngFor="let entry of readEntries() | async">
+        <div *ngFor="let entry of getReflections()">
           <!--<div>Record: {{record}}</div>-->
           <span class="badge">{{entry.reflection.point}}</span> &nbsp;&nbsp;<b>{{entry.timestamp | date:'dd MMM yyyy'}}</b>&nbsp;&nbsp;<span>{{entry.reflection.text}}</span>
           <hr />

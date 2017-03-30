@@ -4,8 +4,9 @@
 
 import { Component,Input,ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
-import { curveBasis, curveMonotoneX} from "d3-shape"; //curveLinear, curveBasisOpen, curveCatmullRomOpen, curveStep, curveCatmullRom,
-import {ReflectionEntry} from "../../data/ReflectionStore";
+import { curveBasis, curveMonotoneX} from "d3-shape";
+import {ReflectionEntry, Reflections} from "../../store/models/Reflections"; //curveLinear, curveBasisOpen, curveCatmullRomOpen, curveStep, curveCatmullRom,
+//import {ReflectionEntry} from "../../data/ReflectionStore";
 
 @Component({
     selector: 'reflection-chart',
@@ -15,8 +16,8 @@ import {ReflectionEntry} from "../../data/ReflectionStore";
 })
 export class ReflectionChartComponent {
 
-    @Input('chartdata') chartdata:ReflectionEntry[];
-    //chartData = [
+    @Input() reflections: Reflections;
+//     chartdata = [
 // { timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},
 // { timestamp:"2016-11-02T12:00:00", reflection:{ point: 100.0, text:"This is some text too."}},
 // { timestamp:"2016-11-03T00:00:00", reflection:{ point: 0.0, text:"This is some text three."}},
@@ -25,24 +26,31 @@ export class ReflectionChartComponent {
 
     chartDataSize = 0;
 
-    getChartData() {
-        return JSON.stringify(this.chartdata);
-    }
+    // testVariable = false;
+    //
+    // public getChartData() {
+    //     return JSON.stringify(this.chartdata);
+    // }
+    //
+    // public testclick() {
+    //     console.log("test click");
+    //     this.testVariable = !this.testVariable;
+    // }
 
     constructor() {}
 
     ngDoCheck() {
-        if (this.chartdata.length != this.chartDataSize) {
-            this.chartDataSize = this.chartdata.length;
-            this.buildChart(this.chartdata);
+        if (this.reflections.reflectionEntries.length != this.chartDataSize) {
+            this.chartDataSize = this.reflections.reflectionEntries.length;
+            this.buildChart(this.reflections.reflectionEntries);
         }
     }
 
-    public buildChart(chartdata) {
+    public buildChart(entries) {
 
         var svg = null;
 
-        var data:DatePoint[] = chartdata.map( r =>  {
+        var data:DatePoint[] = entries.map( r =>  {
             var dp = new DatePoint();
             dp.timestamp = new Date(r.timestamp);
             dp.point = r.reflection.point;

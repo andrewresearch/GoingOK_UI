@@ -2,27 +2,34 @@
  * Created by andrew on 6/06/2016.
  */
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {GoogleSignInSuccess} from 'angular-google-signin';
-import {DataService} from '../DataService';
+//import {DataService} from '../DataService';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {Observable} from "rxjs";
+import {User} from "../../store/models/User";
+
 
 @Component({    //Main directive loaded in index
     selector: 'login',
-    providers: [DataService],
+    //providers: [DataService],
     templateUrl: 'login.component.html',
     styles: ['login.component.css']
 })
 
 export class LoginComponent {
 
-    constructor (private dataService: DataService) {}
+    //constructor (private dataService: DataService) {}
+    constructor() {}
 
     private myClientId: string = '1049767681335-rvm76el8aspacomur42uch1v0amgca5s.apps.googleusercontent.com';
 
-    public signedIn():boolean {
-        return this.dataService.isSignedIn();
+    @Input() user:Observable<User>;
+
+    public signedIn():Observable<boolean> {
+        //return this.dataService.isSignedIn();
+        return this.user.map(u => u.isSignedIn);
     }
 
     public signInValue = this.signedIn();
@@ -46,8 +53,8 @@ export class LoginComponent {
             console.log('Image:' + profile.getImageUrl());
             let id_token = googleUser.getAuthResponse().id_token;
             console.log('id_token:' + id_token);
-            this.dataService.setToken(id_token);
-            this.dataService.getProfile()
+            //this.dataService.setToken(id_token);
+            //this.dataService.getProfile()
             //this.dataService.authorise(id_token)
             //console.log('authResult: '+authResult);
             /*if (!authResult) {

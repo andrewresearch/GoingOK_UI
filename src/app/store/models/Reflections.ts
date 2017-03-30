@@ -2,7 +2,7 @@
  * Created by andrew on 4/3/17.
  */
 
-export class ReflectionStore {
+export class Reflections {
     currentEntry:ReflectionEntry;
     reflectionEntries: ReflectionEntry[];
 

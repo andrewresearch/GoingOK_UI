@@ -13,22 +13,31 @@
     <!-- Main toggled nav content -->
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <!--<li th:class="${home}"><a th:href="@{/}" href="/">Home</a></li>-->
         <!--<li th:class="${profile}"><a th:href="@{/profile}" href="/profile">Profile &nbsp;<span class="badge pull-right" th:text="${count}">17</span></a></li>-->
-        <!--<li th:if="${userData?.isGuide}" th:class="${guide}"> <a th:href="@{/profile/guide}"> Guide</a></li>-->
-        <li></li>
-
-        <!--<li th:class="${about}"><a th:href="@{/about}" href="/about">About</a></li>-->
-        <!--<li th:if="${userData.isAdmin}" th:class="${admin}"> <a th:href="@{/admin}"> Admin</a></li>-->
+        <li><a *ngIf="(user | async).isSignedIn" href="profile">Profile</a></li>
+        <li><a *ngIf="connectionIssues()" class="label label-danger">WARNING: GoingOK is unable to connect to the server and may not function correctly.</a></li>
+        <li><a href="about">About</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://demo.goingok.org/login">&nbsp;&nbsp;{{demoButtonText}}</a></li>
+        <li><a>Google Login: {{(googleProfile|async).email}}</a></li>
         <li>
-          <!--<a href="#"><small><span style="color:#00CC22;">For access please >>> </span></small></a>-->
-          <a href="http://demo.goingok.org/login">&nbsp;&nbsp;{{demoButtonText}}</a>
-        </li>
-        <li>
-          <login></login>
+          <google-signin
+          [clientId]="myClientId"
+          [longTitle]="true"
+          (googleSignInSuccess)="onGoogleSignInSuccess($event)">
+          </google-signin>
+          <!--<div *ngIf="!(user | async).isSignedIn" >-->
+            <!--&lt;!&ndash;<div style="padding-top: 7px; padding-right: 4px">&ndash;&gt;-->
+              <!--<google-signin-->
+                  <!--[clientId]="myClientId"-->
+                  <!--[longTitle]="true"-->
+                  <!--(googleSignInSuccess)="onGoogleSignInSuccess($event)">-->
+              <!--</google-signin>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<div *ngIf="(user | async).isSignedIn"><button (click)="signOut()">Sign Out</button></div>-->
+          <!--</div>-->
           <!--<a href="/login">&nbsp;&nbsp;{{loginButtonText}}</a>-->
         </li>
         <li>
