@@ -66,7 +66,7 @@ export class NavbarComponent implements AfterViewInit {
             this.ref.detectChanges();
             this.store.dispatch(this.userActions.authUser(id_token));
 
-            setTimeout(this.updateReflections, 1000);
+            setTimeout(this.updateReflections, 2000);
 
             //console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
             //console.log('Name: ' + profile.getName());

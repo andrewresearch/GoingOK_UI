@@ -21,24 +21,16 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="http://demo.goingok.org/login">&nbsp;&nbsp;{{demoButtonText}}</a></li>
-        <li><a>Google Login: {{(googleProfile|async).email}}</a></li>
-        <li>
+        <li *ngIf="(user | async).isSignedIn"><a>Google account: {{(googleProfile|async).email}} </a></li>
+        <li [style.visibility]="(user | async).isSignedIn ? 'hidden' : 'visible' ">
           <google-signin
           [clientId]="myClientId"
           [longTitle]="true"
           (googleSignInSuccess)="onGoogleSignInSuccess($event)">
           </google-signin>
-          <!--<div *ngIf="!(user | async).isSignedIn" >-->
-            <!--&lt;!&ndash;<div style="padding-top: 7px; padding-right: 4px">&ndash;&gt;-->
-              <!--<google-signin-->
-                  <!--[clientId]="myClientId"-->
-                  <!--[longTitle]="true"-->
-                  <!--(googleSignInSuccess)="onGoogleSignInSuccess($event)">-->
-              <!--</google-signin>-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--<div *ngIf="(user | async).isSignedIn"><button (click)="signOut()">Sign Out</button></div>-->
-          <!--</div>-->
-          <!--<a href="/login">&nbsp;&nbsp;{{loginButtonText}}</a>-->
+        </li>
+        <li *ngIf="(user | async).isSignedIn">
+          <button (click)="signOut()">Sign Out</button>
         </li>
         <li>
           &nbsp;

@@ -25,13 +25,15 @@ export class ReflectionsService {
         entryPkg.token = token;
         entryPkg.entry = entry;
         return this.http.post(Gok.REFLECTION_ENTRY_URL,JSON.stringify(entryPkg))
-            .map(res => res.json());
+            .map(res => res.json())
+            .catch(this._serverError);
     }
 
     getReflections(): Observable<Reflections> {
         let options = new RequestOptions({ headers: this.authWithSession(this.common.session) });
         return this.http.get(Gok.REFLECTIONS_URL,options)
             .map(this.extractReflections)
+            .catch(this._serverError);
     }
 
     extractReflections = (response:Response): Reflections => {
@@ -44,6 +46,18 @@ export class ReflectionsService {
         let headers = new Headers();
         headers.append(Gok.AUTH_HEADER, session);
         return headers;
+    }
+
+    private _serverError(err: any) {
+        console.log('sever error:', err);  // debug
+        alert("There was a problem connected to the server. Your reflections may not save. Reload GoingOK and try again before writing a reflection.");
+        if(err instanceof Response) {
+            return Observable.throw(err.json().error || 'backend server error');
+            // if you're using lite-server, use the following line
+            // instead of the line above:
+            //return Observable.throw(err.text() || 'backend server error');
+        }
+        return Observable.throw(err || 'backend server error');
     }
 
 }

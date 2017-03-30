@@ -21,7 +21,8 @@ export class UserService {
     authUser(token): Observable<UserResponse> {
         console.log("Authorising user");
         return this.http.post(Gok.AUTH_URL,token)
-            .map(this.sessionAndUser);
+            .map(this.sessionAndUser)
+            .catch(this._serverError);
     }
 
     sessionAndUser = (response:Response): UserResponse => {
@@ -37,6 +38,18 @@ export class UserService {
         }
 
         return ur;
+    }
+
+    private _serverError(err: any) {
+        console.log('sever error:', err);  // debug
+        alert("There was a problem connected to the server. Your reflections may not save. Reload GoingOK and try again before writing a reflection.");
+        if(err instanceof Response) {
+            return Observable.throw(err.json().error || 'backend server error');
+            // if you're using lite-server, use the following line
+            // instead of the line above:
+            //return Observable.throw(err.text() || 'backend server error');
+        }
+        return Observable.throw(err || 'backend server error');
     }
 
 }
