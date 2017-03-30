@@ -5,6 +5,7 @@
 import {User} from "../models";
 import {UserActions} from "../actions";
 import {Action} from "@ngrx/store";
+import {UserResponse} from "../models/User";
 
 export type UserState = User;
 
@@ -32,6 +33,13 @@ export default function (state = initialState, action: Action): UserState {
         }
         case UserActions.GET_USER_SUCCESS: {
             console.log("GET_USER_SUCCESS payload: "+JSON.stringify(action.payload));
+            let response:UserResponse = action.payload
+            console.log("Message: "+ response.message)
+            console.log("Gok ID: "+ response.results.id)
+            state.id = response.results.id;
+            console.log("Session: "+ response.session)
+            state.session = response.session;
+            state.isAuthorised = true;
             return state;
         }
         case UserActions.CHECK_CONNECT_RESULT: {

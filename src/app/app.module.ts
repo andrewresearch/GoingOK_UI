@@ -6,8 +6,9 @@ import { HttpModule } from '@angular/http';
 //import { AlertModule } from 'ng2-bootstrap'; //Demo for ng2-bootstrap
 import { ROUTING } from './app.routes';
 
-//Guards
+//Shared
 import {AuthGuard} from './shared/AuthGuardService';
+import {Common} from "./shared/common";
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
@@ -46,6 +47,7 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +76,7 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
     EffectsModule.run(ReflectionsEffects)
     //AlertModule, //Demo for ng2-bootstrap
   ],
-  providers: [AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions],
+  providers: [Common,AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions],
   bootstrap: [AppComponent]
 })
 export class AppModule {

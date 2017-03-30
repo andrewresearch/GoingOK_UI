@@ -8,11 +8,23 @@ export class User {
     isSignedIn: boolean;
     isAuthorised: boolean;
     google_token: string;
+    session: string;
 
     constructor() {
         this.id = "";
         this.isSignedIn = false;
         this.isAuthorised = false;
         this.google_token = "";
+        this.session = "";
     }
+}
+
+export class UserResponse {
+    message: string;
+    results: GokId;
+    session: string;
+}
+
+class GokId {
+    id: string;
 }

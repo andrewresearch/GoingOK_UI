@@ -8,4 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'GoingOK';
   //loginOut = 'Login';
+
+  // onNotify(loggedIn:boolean):void {
+  //   console.log("Received from navabar: "+loggedIn);
+  // }
 }

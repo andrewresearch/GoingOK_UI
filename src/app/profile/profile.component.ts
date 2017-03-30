@@ -3,12 +3,17 @@
  */
 
 import {Component} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+
 import {EntryComponent} from './entry/entry.component';
 import {ReflectionChartComponent} from './reflectionChart/reflectionChart.component'
 
-//import {Observable} from "rxjs";
-import {Reflection, ReflectionEntry, Reflections} from "../store/models/Reflections";
+import {AppState} from "../store/reducers";
+import {ReflectionsActions, UserActions} from "../store/actions";
 
+import {User} from "../store/models/User";
+import {Reflection, ReflectionEntry, Reflections} from "../store/models/Reflections";
 
 @Component({
     selector: 'profile',
@@ -19,67 +24,50 @@ import {Reflection, ReflectionEntry, Reflections} from "../store/models/Reflecti
 
 export class ProfileComponent {
 
-    //reflection: Observable<ReflectionStore>;
-    reflections: Reflections = new Reflections();
+    user: Observable<User>;
+    reflections: Observable<Reflections>;
+
     currentReflection: Reflection = new Reflection();
-    public getReflections() {
-        return JSON.stringify(this.reflections);
+
+
+    constructor(
+        private store: Store<AppState>,
+        private userActions: UserActions,
+        private reflectionsActions: ReflectionsActions
+        //private router: Router
+    ) {
+        this.user = store.select('user');
+        this.reflections = store.select('reflections');
     }
 
-    constructor() {}
+    public getUser():Observable<User> {
+        //return this.user.map( usr => JSON.stringify(usr));
+        return this.user;
+    }
+
+    public getReflections():Observable<string> {
+        return this.reflections.map( refs => JSON.stringify(refs));
+    }
+
+    public updateReflections() {
+        this.store.dispatch(this.reflectionsActions.getReflections());
+    }
+
+    public getCurrentEntry():Observable<ReflectionEntry> {
+        return this.reflections.map( refs => refs.currentEntry)
+    }
 
     onNotify(ref:Reflection):void {
-        console.log("Notify message: "+JSON.stringify(ref));
-        this.currentReflection = ref;
+        //this.currentReflection = ref;
+        let entry = new ReflectionEntry();
+        entry.reflection = ref;
+        console.log("Notify message: "+JSON.stringify(entry));
+        this.store.dispatch(this.reflectionsActions.addReflection(entry));
     }
 
-    // readThePoint():Observable<number> {
-    //  //return this.reflection.map( r => r.currentEntry.reflection.point)
-    //     return new Observable()
-    // }
-    // readTheText():Observable<string> {
-    //     //return this.reflection.map( r => r.currentEntry.reflection.text)
-    //     return new Observable()
-    // }
-
-    // set() {
-    //     //this.store.dispatch({ type: SET_POINT, payload: 59 });
-    // }
-
-    public loadHistoric() {
-        console.log("loadHistoric() run")
-        let refs = new Reflections()
-        refs.reflectionEntries = this.refChartData.map( r => {
-                let entry = new ReflectionEntry();
-                entry.timestamp = r.timestamp;
-                entry.reflection = r.reflection;
-                return entry;
-        })
-        // let entry = new ReflectionEntry();
-        // entry.reflection.text = "Test entry";
-        // entry.reflection.point = 0.0;
-        refs.reflectionEntries = refs.reflectionEntries.reverse();
-
-        this.reflections = refs;
-        //this.store.dispatch(this.reflectionActions.loadReflections());
+    public loadDummy() {
+        console.log("Loading dummy data into the store")
+        this.store.dispatch(this.reflectionsActions.loadDummy());
     }
-
-//     readStore():Observable<string> {
-//         //return this.reflection.map(r => JSON.stringify(r))
-//         return new Observable()
-//     }
-//
-//     getEntries():Observable<any[]> {
-//         //return this.reflection.map(r => r.reflectionEntries)
-//         return new Observable()
-//     }
-//
-//
-    refChartData =  [
-{ timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},
-{ timestamp:"2016-12-02T12:00:00", reflection:{ point: 100.0, text:"This is some text too."}},
-{ timestamp:"2017-01-03T00:00:00", reflection:{ point: 0.0, text:"This is some text three."}},
-{ timestamp:"2017-01-05T10:00:00", reflection:{ point: 75.5, text:"Final text."}}
-];
 
 }
