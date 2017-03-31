@@ -21,7 +21,8 @@ export class AuthenticationService {
 
     public   authInfo = {
         signedIn: false,
-        authorised: false
+        authorised: false,
+        session: ""
     }
 
 

@@ -8,8 +8,7 @@ import { BsDropdownModule } from 'ng2-bootstrap';
 import { ROUTING } from './app.routes';
 
 //Shared
-import {AuthGuard} from './shared/AuthGuardService';
-import {Common} from "./shared/common";
+import {AuthGuard} from './services';
 import {AuthenticationService} from './services/authentication.service';
 
 //ngrx
@@ -17,7 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import {EffectsModule} from "@ngrx/effects";
 import reducer from './store/reducers';
 import {UserActions,ReflectionsActions} from "./store/actions";
-import {UserService,ReflectionsService} from "./store/services";
+import {UserService,ReflectionsService} from "./services";
 import {UserEffects,ReflectionsEffects} from "./store/effects";
 
 //Components
@@ -71,7 +70,7 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
     EffectsModule.run(ReflectionsEffects),
     BsDropdownModule.forRoot()
   ],
-  providers: [Common,AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions,AuthenticationService],
+  providers: [AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions,AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

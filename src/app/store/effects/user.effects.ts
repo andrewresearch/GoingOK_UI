@@ -7,7 +7,7 @@ import {Effect, Actions} from '@ngrx/effects';
 
 import {AppState} from '../reducers';
 import {UserActions} from '../actions';
-import {UserService} from '../services';
+import {UserService} from '../../services';
 
 @Injectable()
 export class UserEffects {

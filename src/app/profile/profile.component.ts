@@ -15,7 +15,6 @@ import {ReflectionsActions, UserActions} from "../store/actions";
 
 import {User} from "../store/models/User";
 import {Reflection, ReflectionEntry, Reflections} from "../store/models/Reflections";
-import {Common} from "../shared/common";
 import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
@@ -38,7 +37,6 @@ export class ProfileComponent {
         private store: Store<AppState>,
         private userActions: UserActions,
         private reflectionsActions: ReflectionsActions,
-        private common: Common,
         private authService: AuthenticationService
         //private router: Router
     ) {

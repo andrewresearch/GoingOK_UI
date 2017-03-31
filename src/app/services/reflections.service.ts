@@ -8,15 +8,15 @@ import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import {ReflectionEntry, Reflections} from "../models";
+import {ReflectionEntry, Reflections} from "../store/models";
 import {Gok} from './gok.globals';
-import {Common} from "../../shared/common";
+import {AuthenticationService} from "./authentication.service";
 
 
 @Injectable()
 export class ReflectionsService {
 
-    constructor (private http: Http, private common: Common) {}
+    constructor (private http: Http, private authService: AuthenticationService) {}
 
 
     saveReflectionEntry(entry:ReflectionEntry,token:string) {
@@ -24,14 +24,14 @@ export class ReflectionsService {
         let entryPkg = { token:"", entry:null };
         entryPkg.token = token;
         entryPkg.entry = entry;
-        let options = new RequestOptions({ headers: this.authWithSession(this.common.session) });
+        let options = new RequestOptions({ headers: this.authWithSession(this.authService.authInfo.session) });
         return this.http.post(Gok.REFLECTION_ENTRY_URL,JSON.stringify(entryPkg),options)
             .map(res => res.json())
             .catch(this._serverError);
     }
 
     getReflections(): Observable<Reflections> {
-        let options = new RequestOptions({ headers: this.authWithSession(this.common.session) });
+        let options = new RequestOptions({ headers: this.authWithSession(this.authService.authInfo.session) });
         return this.http.get(Gok.REFLECTIONS_URL,options)
             .map(this.extractReflections)
             .catch(this._serverError);
