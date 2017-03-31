@@ -14,11 +14,10 @@ export class AuthGuard implements CanActivate {
 
     canActivate() {
         console.log('AuthGuard#canActivate called');
-        // if(this.authService.isLoggedIn()) {
-        //     return true;
-        // }
-        // this.router.navigate(['']);
-        // return false;
-        return true;
+        if(this.authService.authInfo.signedIn) {
+            return true;
+        }
+        this.router.navigate(['']);
+        return false;
     }
 }

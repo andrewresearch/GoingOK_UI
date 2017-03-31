@@ -2,81 +2,44 @@
  * Created by andrew on 6/06/2016.
  */
 
-import {Component, Input} from '@angular/core';
-import {GoogleSignInSuccess} from 'angular-google-signin';
-//import {DataService} from '../DataService';
-//import 'rxjs/add/operator/map';
-//import 'rxjs/add/operator/catch';
-import {Observable} from "rxjs";
-//import {User} from "../../store/models/User";
+import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
+import {AuthenticationService} from "../services/authentication.service";
+import {Router} from "@angular/router";
 
 
-@Component({    //Main directive loaded in index
+declare var gapi: any;
+
+@Component({
     selector: 'login',
-    //providers: [DataService],
     templateUrl: 'login.component.html',
     styleUrls: ['login.component.css']
 })
 
 export class LoginComponent {
 
-    //constructor (private dataService: DataService) {}
-    constructor() {}
+    constructor(private zone: NgZone, private authService:AuthenticationService, private router: Router,private cdr:ChangeDetectorRef){}
 
-    // private myClientId: string = '1049767681335-rvm76el8aspacomur42uch1v0amgca5s.apps.googleusercontent.com';
-    //
-    // //@Input() user:Observable<User>;
-    //
-    // public signedIn() {
-    //     //return this.dataService.isSignedIn();
-    //     //return this.user.map(u => u.isSignedIn);
-    // }
-    //
-    // public signInValue = this.signedIn();
-    //
-    //
-    // // var myWidth = 100;
-    // // var myTheme = '';
-    // // var myScope = '';
-    // // var myLongTitle = 'GoingOK';
-    //
-    // public onGoogleSignInSuccess(event: GoogleSignInSuccess) {
-    //     try {
-    //         let googleUser: gapi.auth2.GoogleUser = event.googleUser;
-    //         let id: string = googleUser.getId();
-    //         let profile: gapi.auth2.BasicProfile = googleUser.getBasicProfile();
-    //         console.log('ID: ' +
-    //             profile
-    //                 .getId()); // Do not send to your backend! Use an ID token instead.
-    //         console.log('Name: ' + profile.getName());
-    //         console.log('Email:' + profile.getEmail());
-    //         console.log('Image:' + profile.getImageUrl());
-    //         let id_token = googleUser.getAuthResponse().id_token;
-    //         console.log('id_token:' + id_token);
-    //         //this.dataService.setToken(id_token);
-    //         //this.dataService.getProfile()
-    //         //this.dataService.authorise(id_token)
-    //         //console.log('authResult: '+authResult);
-    //         /*if (!authResult) {
-    //          this.dataService.getProfile(authResult);
-    //          } else {
-    //          console.log("Unable to retrieve profile")
-    //          }*/
-    //     }
-    //     catch(e) {
-    //         console.log("Unable to connect to Google API :"+e);
-    //     }
-    //
-    // }
-    //
-    // public signOut() {
-    //     var auth2 = gapi.auth2.getAuthInstance();
-    //     auth2.signOut().then(function () {
-    //         auth2.disconnect()
-    //         console.log('User signed out.');
-    //     });
-    // }
+    ngAfterViewInit() {
 
+        gapi.signin2.render('my-signin2', {
+            'onsuccess': param => this.onSignIn(param),
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'light'
+
+        });
+    }
+    onSignIn(googleUser) {
+        let profile = this.authService.onSignIn(googleUser);
+        this.cdr.detectChanges();
+        this.router.navigate(['profile']);
+    };
+    // signOut() {
+    //     this.authService.signOut()
+    //     this.fShowInfo = false;
+    // }
 
 
 }

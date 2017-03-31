@@ -23,12 +23,11 @@ import {UserEffects,ReflectionsEffects} from "./store/effects";
 //Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
-//import { LoginComponent } from './shared/login/login.component';
+import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 
 //Login
-import {GoogleSignInComponent} from 'angular-google-signin';
+
 //Profile
 import { MessageComponent } from './message/message.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -49,13 +48,13 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
   declarations: [
     AppComponent,
     NavbarComponent,
+    LoginComponent,
     AboutComponent,
     ProfileComponent,
       MessageComponent,
       ReflectionChartComponent,
       EntryComponent,
       SliderComponent,
-      GoogleSignInComponent,
       ReflectionsComponent,
       ProjectsComponent,
       T2tComponent,

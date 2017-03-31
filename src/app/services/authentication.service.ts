@@ -2,26 +2,29 @@
  * Created by andrew on 31/3/17.
  */
 
-import {Injectable} from "@angular/core";
-import {GoogleSignInSuccess} from "angular-google-signin";
+import {ChangeDetectorRef, Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {AppState} from "../store/reducers";
 import {GoogleProfile,User} from "../store/models";
 import {GoogleProfileActions,UserActions} from "../store/actions";
 import {Observable} from "rxjs";
 
+declare var gapi: any;
+
 @Injectable()
 export class AuthenticationService {
 
-    private gUser: gapi.auth2.GoogleUser;
-    private gProfile: gapi.auth2.BasicProfile;
     private gStore: Observable<GoogleProfile> ;
     private uStore: Observable<User>;
 
+    public myClientId: string = '1049767681335-rvm76el8aspacomur42uch1v0amgca5s.apps.googleusercontent.com'; //TODO Send this programatically rather than metatag in index.html
+
     public   authInfo = {
-        signedIn: true,
-        authorised: true
+        signedIn: false,
+        authorised: false
     }
+
+
 
     constructor(
         private store: Store<AppState>,
@@ -32,67 +35,56 @@ export class AuthenticationService {
         this.uStore = store.select('user');
     }
 
-    isSignedIn() {
-        console.log("... check signed in ...");
-        //return (this.gUser !=null && this.gUser.isSignedIn());
-        return true;
+
+    onSignIn(googleUser) {
+        let profile = googleUser.getBasicProfile();
+        //this.logProfileToConsole(profile);
+        this.authInfo.signedIn = true;
+        return profile;
     }
 
-    isAuthorised() {
-        console.log("... check authorised ...");
-        return true;
+    signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut();
+        this.authInfo.signedIn = false;
     }
 
-    isLoggedIn() {
-        console.log("... check logged in ...");
-        //return (this.isSignedIn && this.isAuthorised());
-        return true;
-    }
+    ngOnInit() {
 
-    googleSignIn(event: GoogleSignInSuccess) {
-        console.log("<<<< GOOGLE SIGN-IN >>>>");
-        this.gUser  = event.googleUser;
-        //this.isSignedIn = this.gUser.isSignedIn();
-        this.gProfile = this.gUser.getBasicProfile();
-        this.gStore.map( gp => {
-            if(gp.id!=this.gProfile.getId()) {
-                console.log("!!! Google ID has changed !!!");
-                //this.goingOkAuthorisation();
-                //this.updateGoogleProfile();
-            }
-        });
+    }
+    ngAfterContentInit() {
+
     }
 
     goingOkAuthorisation() {
         console.log("<<<< GOINGOK AUTH >>>>");
-        this.store.dispatch(this.uActions.authUser(this.googleToken()));
+        //this.store.dispatch(this.uActions.authUser(this.googleToken()));
     }
 
-    googleToken():string {
-        return this.gUser.getAuthResponse().id_token;
-    }
+    // googleToken():string {
+    //     return this.gUser.getAuthResponse().id_token;
+    // }
+    //
+    // updateGoogleProfile() {
+    //     console.log("... updating Google Profile in store ...");
+    //     let gp = new GoogleProfile();
+    //     gp.id = this.gProfile.getId();
+    //     gp.name = this.gProfile.getName();
+    //     gp.email = this.gProfile.getEmail();
+    //     gp.image_url = this.gProfile.getImageUrl();
+    //     gp.token = this.googleToken();
+    //     this.store.dispatch(this.gpActions.saveProfile(gp));
+    // }
+    //
 
-    updateGoogleProfile() {
-        console.log("... updating Google Profile in store ...");
-        let gp = new GoogleProfile();
-        gp.id = this.gProfile.getId();
-        gp.name = this.gProfile.getName();
-        gp.email = this.gProfile.getEmail();
-        gp.image_url = this.gProfile.getImageUrl();
-        gp.token = this.googleToken();
-        this.store.dispatch(this.gpActions.saveProfile(gp));
-    }
 
-    signOut() {
-        //this.common.signInStatus = false;
-        // var auth2 = gapi.auth2.getAuthInstance();
-        // auth2.signOut().then(function () {
-        //     auth2.disconnect();
-        //     console.log('User signed out.');
-        // });
-        // //this.store.dispatch(this.userActions.signedOut());
-        // //this.store.dispatch(this.reflectionsActions.resetReflections());
-        // this.store.dispatch(this.gpActions.resetProfile());
+    logProfileToConsole(profile) {
+        // console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
     }
 
 }

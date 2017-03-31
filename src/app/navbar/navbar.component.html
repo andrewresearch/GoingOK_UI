@@ -16,13 +16,14 @@
       <!--left nav -->
       <ul id="main-menu" class="nav navbar-nav">
         <li><a *ngIf="isNotAboutPage()" routerLink="about">About</a></li>
-        <li><a *ngIf="(authInfo?.authorised) && isNotProfilePage()" routerLink="profile">Profile</a></li>
-        <li><a><small>| S: {{authInfo?.signedIn}} | A: {{authInfo?.authorised}} |</small></a></li>
+        <li><a *ngIf="(authInfo?.signedIn) && isNotProfilePage()" routerLink="profile">Profile</a></li>
+        <!--<li><a><small>| S: {{authInfo?.signedIn}} | A: {{authInfo?.authorised}} |</small></a></li>-->
         <li><a *ngIf="connectionIssues()" class="label label-danger">WARNING: GoingOK is unable to connect to the server and may not function correctly.</a></li>
       </ul>
       <!--right nav -->
       <ul class="nav navbar-nav navbar-right">
         <li><a *ngIf="authInfo?.signedIn" (click)="signOut()">Sign Out</a></li>
+        <li><a *ngIf="!(authInfo?.signedIn)" routerLink="/login">Sign In</a></li>
       </ul>
 
     </div><!-- main nav content /.navbar-collapse -->

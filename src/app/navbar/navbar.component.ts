@@ -3,7 +3,6 @@
  */
 
 import {Component} from '@angular/core';
-import {GoogleSignInSuccess} from 'angular-google-signin';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
 

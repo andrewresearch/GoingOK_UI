@@ -1,14 +1,16 @@
-<!--<div style="padding-top: 7px; padding-right: 4px">-->
-  <!--<div *ngIf="!signedIn()">-->
-  <!--<google-signin-->
-      <!--[clientId]="myClientId"-->
-      <!--[longTitle]="true"-->
-      <!--(googleSignInSuccess)="onGoogleSignInSuccess($event)">-->
-  <!--</google-signin>-->
-  <!--</div>-->
-  <!--<div *ngIf="signedIn()"><button (click)="signOut()">Sign Out</button></div>-->
-<!--</div>-->
 
-  <!--[width]="myWidth"-->
-  <!--[theme]="myTheme"-->
-  <!--[scope]="myScope"-->
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <div class="panel panel-success">
+      <div class="panel-heading"><div  id="my-signin2" (data-onsuccess)="onSignIn"></div></div>
+      <div class="panel-body">
+        <p>GoingOK uses Google login to authenticate you as a user.</p>
+        <p>GoingOK doesn't store any passwords or personal information. GoingOK only stores your Google email address for the purposes of sending you reminders and notifcations.</p>
+        <p>All of your reflections are stored separately and are not connected with your email address or any of your Google information. GoingOK does not provide any information to Google.</p>
+        <p>To login, click the "Sign in with Google button".</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
