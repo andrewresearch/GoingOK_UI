@@ -10,6 +10,7 @@ import { ROUTING } from './app.routes';
 //Shared
 import {AuthGuard} from './shared/AuthGuardService';
 import {Common} from "./shared/common";
+import {AuthenticationService} from './services/authentication.service';
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
@@ -22,9 +23,8 @@ import {UserEffects,ReflectionsEffects} from "./store/effects";
 //Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 
-import { LoginComponent } from './shared/login/login.component';
+//import { LoginComponent } from './shared/login/login.component';
 import { AboutComponent } from './about/about.component';
 
 //Login
@@ -50,7 +50,6 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
     AppComponent,
     NavbarComponent,
     AboutComponent,
-    LoginComponent,
     ProfileComponent,
       MessageComponent,
       ReflectionChartComponent,
@@ -58,10 +57,10 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
       SliderComponent,
       GoogleSignInComponent,
       ReflectionsComponent,
-      FooterComponent,
       ProjectsComponent,
       T2tComponent,
-      PageNotFoundComponent
+      PageNotFoundComponent,
+      //LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +72,7 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
     EffectsModule.run(ReflectionsEffects),
     BsDropdownModule.forRoot()
   ],
-  providers: [Common,AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions],
+  providers: [Common,AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions,AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

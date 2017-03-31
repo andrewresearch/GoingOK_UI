@@ -24,6 +24,7 @@
         <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-tasks"></span> Dev Info</h5></div>
         <div id="goingokMessage" class="panel-body small">
 
+          <p> <button (click)="toggleSignIn()"> signIn </button> <button (click)="toggleAuthorised()"> authorised </button> </p>
           <p>User ID: {{ (getUser()| async).id }}</p>
           <!--<p>Current session: {{currentSession}}</p>-->
           <button (click)="loadDummy()"> dummy reflections </button><button (click)="updateReflections()"> update reflections </button>

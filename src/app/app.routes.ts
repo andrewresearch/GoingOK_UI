@@ -10,11 +10,12 @@ import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.compone
 import {AuthGuard} from "./shared/AuthGuardService";
 
 const routes: Routes = [
-    { path: 'projects/transition2teaching', component: T2tComponent },
-    { path: 'projects', component: ProjectsComponent },
+    { path: 'projects', component: ProjectsComponent, children: [
+        { path: 'transition2teaching', component: T2tComponent }
+    ]},
     { path: 'profile',component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'about', component: AboutComponent },
-    { path: '', component: AboutComponent },
+    { path: '', redirectTo: 'about', pathMatch: 'full' },
     { path: 'errors/404', component: PageNotFoundComponent },
     { path: '**', component: PageNotFoundComponent }
 ];

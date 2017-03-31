@@ -1,42 +1,30 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav id="main-nav-bar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
+
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar">Test</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="goingok-font navbar-brand" href="/"><img src="/assets/img/GoingOK_Logo_small_transparent.png" height="40" style="vertical-align:top" /></a>
+      <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">-->
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <!--<span class="icon-bar">Test</span>-->
+        <!--<span class="icon-bar"></span>-->
+      <!--</button>-->
+      <a class="goingok-font navbar-brand" routerLink=""><img id="logo" src="/assets/img/GoingOK_Logo_small_transparent.png"/></a>
     </div>
+
     <!-- Main toggled nav content -->
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <!--<li th:class="${profile}"><a th:href="@{/profile}" href="/profile">Profile &nbsp;<span class="badge pull-right" th:text="${count}">17</span></a></li>-->
-        <li><a *ngIf="(user | async).isSignedIn" href="profile">Profile</a></li>
+      <!--left nav -->
+      <ul id="main-menu" class="nav navbar-nav">
+        <li><a *ngIf="isNotAboutPage()" routerLink="about">About</a></li>
+        <li><a *ngIf="(authInfo?.authorised) && isNotProfilePage()" routerLink="profile">Profile</a></li>
+        <li><a><small>| S: {{authInfo?.signedIn}} | A: {{authInfo?.authorised}} |</small></a></li>
         <li><a *ngIf="connectionIssues()" class="label label-danger">WARNING: GoingOK is unable to connect to the server and may not function correctly.</a></li>
-        <li><a href="about">About</a></li>
       </ul>
-
+      <!--right nav -->
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://demo.goingok.org/login">&nbsp;&nbsp;{{demoButtonText}}</a></li>
-        <li *ngIf="(user | async).isSignedIn"><a>Google account: {{(googleProfile|async).email}} </a></li>
-        <li [style.visibility]="(user | async).isSignedIn ? 'hidden' : 'visible' ">
-          <google-signin
-          [clientId]="myClientId"
-          [longTitle]="true"
-          (googleSignInSuccess)="onGoogleSignInSuccess($event)">
-          </google-signin>
-        </li>
-        <li *ngIf="(user | async).isSignedIn">
-          <button (click)="signOut()">Sign Out</button>
-        </li>
-        <li>
-          &nbsp;
-        </li>
-
+        <li><a *ngIf="authInfo?.signedIn" (click)="signOut()">Sign Out</a></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+
+    </div><!-- main nav content /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

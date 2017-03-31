@@ -5,6 +5,7 @@ import {Injectable} from "@angular/core";
 
 @Injectable()
 export class Common {
-    session: string = "";
-    newUser: boolean = false;
+    session: string;
+    newUser: boolean;
+    signInStatus: boolean = false;
 }

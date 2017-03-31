@@ -22,10 +22,10 @@ export class UserEffects {
     //     .switchMap(() => this.userService.checkConnect())
     //     .map(result => this.userActions.checkConnectResult(result));
 
-    @Effect() authUser$ = this.update$
-        .ofType(UserActions.AUTH_USER)
-        .map(action => action.payload)
-        .switchMap(token => this.userService.authUser(token))
-        .map(userResponse => this.userActions.getUserSuccess(userResponse));
+    // @Effect() authUser$ = this.update$
+    //     .ofType(UserActions.AUTH_USER)
+    //     .map(action => action.payload)
+    //     .switchMap(token => this.userService.authUser(token))
+    //     .map(userResponse => this.userActions.getUserSuccess(userResponse));
 
 }

@@ -16,6 +16,7 @@ import {ReflectionsActions, UserActions} from "../store/actions";
 import {User} from "../store/models/User";
 import {Reflection, ReflectionEntry, Reflections} from "../store/models/Reflections";
 import {Common} from "../shared/common";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
     selector: 'profile',
@@ -37,12 +38,22 @@ export class ProfileComponent {
         private store: Store<AppState>,
         private userActions: UserActions,
         private reflectionsActions: ReflectionsActions,
-        private common: Common
+        private common: Common,
+        private authService: AuthenticationService
         //private router: Router
     ) {
         this.user = store.select('user');
         this.reflections = store.select('reflections');
     }
+
+
+    toggleSignIn() {
+        this.authService.authInfo.signedIn = !this.authService.authInfo.signedIn
+    }
+    toggleAuthorised() {
+        this.authService.authInfo.authorised = !this.authService.authInfo.authorised
+    }
+
 
     public newUserDone() {
         this.newUser = false;

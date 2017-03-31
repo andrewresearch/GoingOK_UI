@@ -16,15 +16,15 @@ export class ReflectionsEffects {
         private reflectionsService: ReflectionsService,
     ) {}
 
-    @Effect() saveReflectionEntry$ = this.update$
-        .ofType(ReflectionsActions.ADD_REFLECTION)
-        .map(action => action.payload)
-        .switchMap(entry => this.reflectionsService.saveReflectionEntry(entry,"dummy_token"))
-        .map(result => this.reflectionsActions.saveEntryResult(result));
-
-    @Effect() getReflections$ = this.update$
-        .ofType(ReflectionsActions.GET_REFLECTIONS)
-        .switchMap(() => this.reflectionsService.getReflections())
-        .map(result => this.reflectionsActions.getReflectionsSuccess(result));
+    // @Effect() saveReflectionEntry$ = this.update$
+    //     .ofType(ReflectionsActions.ADD_REFLECTION)
+    //     .map(action => action.payload)
+    //     .switchMap(entry => this.reflectionsService.saveReflectionEntry(entry,"dummy_token"))
+    //     .map(result => this.reflectionsActions.saveEntryResult(result));
+    //
+    // @Effect() getReflections$ = this.update$
+    //     .ofType(ReflectionsActions.GET_REFLECTIONS)
+    //     .switchMap(() => this.reflectionsService.getReflections())
+    //     .map(result => this.reflectionsActions.getReflectionsSuccess(result));
 
 }

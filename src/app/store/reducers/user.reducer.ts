@@ -14,20 +14,20 @@ const initialState: UserState = new User();
 
 export default function (state = initialState, action: Action): UserState {
     switch (action.type) {
-        case UserActions.SIGNED_IN: {
-            console.log("User Signed In");
-            let newState = new User();
-            newState.isSignedIn = true;
-            newState.google_token = action.payload;
-            return newState;
-        }
-        case UserActions.SIGNED_OUT: {
-            console.log("User Signed Out");
-            let newState = new User();
-            state.isSignedIn = false;
-            state.google_token = "";
-            return newState;
-        }
+        // case UserActions.SIGNED_IN: {
+        //     console.log("User Signed In");
+        //     let newState = new User();
+        //     newState.isSignedIn = true;
+        //     newState.google_token = action.payload;
+        //     return newState;
+        // }
+        // case UserActions.SIGNED_OUT: {
+        //     console.log("User Signed Out");
+        //     let newState = new User();
+        //     state.isSignedIn = false;
+        //     state.google_token = "";
+        //     return newState;
+        // }
         case UserActions.RESET_USER: {
             return initialState;
         }
@@ -47,7 +47,7 @@ export default function (state = initialState, action: Action): UserState {
             return state;
         }
         default: {
-            console.log("Returning default state for user")
+            //console.log("Returning default state for user")
             return state;
         }
     }

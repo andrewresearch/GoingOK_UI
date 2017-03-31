@@ -16,20 +16,20 @@ export class UserActions {
     static GET_USER_SUCCESS = '[User] Get User Success';
     static RESET_USER = '[User] Reset User';
 
-    static SIGNED_IN = '[User] Signed In';
-    static SIGNED_OUT = '[User] Signed Out';
-
-    signedIn(token): Action {
-        return {
-            type: UserActions.SIGNED_IN,
-            payload: token
-        };
-    }
-    signedOut():Action {
-        return {
-            type: UserActions.SIGNED_OUT
-        }
-    }
+    // static SIGNED_IN = '[User] Signed In';
+    // static SIGNED_OUT = '[User] Signed Out';
+    //
+    // signedIn(token): Action {
+    //     return {
+    //         type: UserActions.SIGNED_IN,
+    //         payload: token
+    //     };
+    // }
+    // signedOut():Action {
+    //     return {
+    //         type: UserActions.SIGNED_OUT
+    //     }
+    // }
 
     checkConnect(): Action {
         return {

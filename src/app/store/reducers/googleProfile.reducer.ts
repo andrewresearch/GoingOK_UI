@@ -19,7 +19,7 @@ export default function (state = initialState, action: Action): GoogleProfileSta
             return state;
         }
         case GoogleProfileActions.SAVE_PROFILE: {
-            console.log("GoogleProfile: "+JSON.stringify(action.payload))
+            //console.log("GoogleProfile: "+JSON.stringify(action.payload))
             state = action.payload;
             return state;
         }
