@@ -6,6 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'GoingOK';
+
+
+
   //loginOut = 'Login';
+
+  // onNotify(loggedIn:boolean):void {
+  //   console.log("Received from navabar: "+loggedIn);
+  // }
 }

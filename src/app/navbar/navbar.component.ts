@@ -3,16 +3,47 @@
  */
 
 import {Component} from '@angular/core';
-import {LoginComponent} from '../shared/login/login.component'
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../services/authentication.service";
 
-@Component({    //Main directive loaded in index
+@Component({
     selector: 'navbar',
-    providers: [LoginComponent],
     templateUrl: 'navbar.component.html',
-    styles: ['navbar.component.css']
+    styleUrls: ['navbar.component.css']
 })
 
 export class NavbarComponent {
-    loginButtonText = 'login'
-    demoButtonText = 'demo'
+
+
+    private authInfo;
+
+
+    connectionIssues(): boolean {
+        return !navigator.onLine //Detects browser not online
+    }
+
+    constructor(
+        private router: Router,
+        private authService: AuthenticationService
+    ) {}
+
+    ngOnInit() {
+        this.authInfo = this.authService.authInfo;
+    }
+
+    public isNotProfilePage() {
+        //console.log("location: "+this.router.url);
+        return !(this.router.url =='/profile');
+    }
+
+    public isNotAboutPage() {
+        //console.log("location: "+this.router.url);
+        return !(this.router.url =='/about');
+    }
+
+    public signOut() {
+        this.authService.signOut();
+        this.router.navigate(['']);
+    }
+
 }

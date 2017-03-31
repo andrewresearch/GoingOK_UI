@@ -7,13 +7,17 @@ import { ProfileComponent } from './profile/profile.component';
 //import {AppComponent} from "./app.component";
 import {AboutComponent} from "./about/about.component";
 import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.component";
+import {AuthGuard} from "./shared/AuthGuardService";
+import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
-    { path: 'projects/transition2teaching', component: T2tComponent },
-    { path: 'projects', component: ProjectsComponent },
-    { path: 'profile',component: ProfileComponent },
-
-    { path: '', component: AboutComponent },
+    { path: 'projects', component: ProjectsComponent, children: [
+        { path: 'transition2teaching', component: T2tComponent }
+    ]},
+    { path: 'profile',component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent },
+    { path: 'about', component: AboutComponent },
+    { path: '', redirectTo: 'about', pathMatch: 'full' },
     { path: 'errors/404', component: PageNotFoundComponent },
     { path: '**', component: PageNotFoundComponent }
 ];

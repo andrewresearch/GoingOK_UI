@@ -3,67 +3,153 @@
  */
 
 import {Component} from '@angular/core';
-import {EntryComponent} from './entry/entry.component';
-import {ReflectionChartComponent} from './reflectionChart/reflectionChart.component'
-
-
-import { Store } from '@ngrx/store';
-import {SET_POINT, LOAD_PREV} from '../store/reflection.store';
+import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {ReflectionStore, Reflection, ReflectionEntry} from "../data/ReflectionStore";
 
-interface AppState {
-    reflection: ReflectionStore;
-}
+import {EntryComponent} from './entry/entry.component';
+import {ReflectionChartComponent} from './reflectionChart/reflectionChart.component';
+//import { DropdownModule } from 'ng2-bootstrap';
+
+import {AppState} from "../store/reducers";
+import {ReflectionsActions, UserActions} from "../store/actions";
+
+import {User} from "../store/models/User";
+import {Reflection, ReflectionEntry, Reflections} from "../store/models/Reflections";
+import {Common} from "../shared/common";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
     selector: 'profile',
-    providers: [EntryComponent,ReflectionChartComponent],
+    providers: [EntryComponent,ReflectionChartComponent], //,DropdownModule],
     templateUrl: 'profile.component.html',
     styleUrls: ['profile.component.css'],
 })
 
 export class ProfileComponent {
 
-    reflection: Observable<ReflectionStore>;
+    user: Observable<User>;
+    reflections: Observable<Reflections>;
 
-    constructor(private store: Store<AppState>){
-        this.reflection = store.select('reflectionStore');
-        this.loadHistoric();
-    }
+    currentReflection: Reflection = new Reflection();
 
-    readThePoint():Observable<number> {
-     return this.reflection.map( r => r.currentEntry.reflection.point)
-    }
-    readTheText():Observable<string> {
-        return this.reflection.map( r => r.currentEntry.reflection.text)
-    }
+    newUser: boolean = false;
 
-    set() {
-        this.store.dispatch({ type: SET_POINT, payload: 59 });
-    }
-
-    loadHistoric() {
-        let store = new ReflectionStore()
-        store.reflectionEntries = this.refChartData.reverse().map( r => {
-                let entry = new ReflectionEntry();
-                entry.timestamp = r.timestamp;
-                entry.reflection = r.reflection;
-                return entry;
-        })
-        this.store.dispatch({ type: LOAD_PREV, payload: store });
-    }
-
-    readStore():Observable<string> {
-        return this.reflection.map(r => JSON.stringify(r))
+    constructor(
+        private store: Store<AppState>,
+        private userActions: UserActions,
+        private reflectionsActions: ReflectionsActions,
+        private common: Common,
+        private authService: AuthenticationService
+        //private router: Router
+    ) {
+        this.user = store.select('user');
+        this.reflections = store.select('reflections');
     }
 
 
-    refChartData =  [
-{ timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},
-{ timestamp:"2016-12-02T12:00:00", reflection:{ point: 100.0, text:"This is some text too."}},
-{ timestamp:"2017-01-03T00:00:00", reflection:{ point: 0.0, text:"This is some text three."}},
-{ timestamp:"2017-01-05T10:00:00", reflection:{ point: 75.5, text:"Final text."}}
-];
+    toggleSignIn() {
+        this.authService.authInfo.signedIn = !this.authService.authInfo.signedIn
+    }
+    toggleAuthorised() {
+        this.authService.authInfo.authorised = !this.authService.authInfo.authorised
+    }
+
+
+    public newUserDone() {
+        this.newUser = false;
+    }
+    public getUser():Observable<User> {
+        //return this.user.map( usr => JSON.stringify(usr));
+        return this.user;
+    }
+
+    public getReflections():Observable<string> {
+        return this.reflections.map( refs => JSON.stringify(refs));
+    }
+
+    public updateReflections() {
+        this.store.dispatch(this.reflectionsActions.getReflections());
+    }
+
+    public getCurrentEntry():Observable<ReflectionEntry> {
+        return this.reflections.map( refs => refs.currentEntry)
+    }
+
+    onNotify(ref:Reflection):void {
+        //this.currentReflection = ref;
+        let entry = new ReflectionEntry();
+        entry.reflection = ref;
+        console.log("Notify message: "+JSON.stringify(entry));
+        this.store.dispatch(this.reflectionsActions.addReflection(entry));
+    }
+
+    public loadDummy() {
+        console.log("Loading dummy data into the store")
+        this.store.dispatch(this.reflectionsActions.loadDummy());
+    }
+
+    selectedResearch() {
+        return this.selectedProject.code + "-" +
+                this.selectedOrg.code + "-" +
+                this.selectedCohort.code
+    }
+    selectedProject = { name: "None", code: "000" }
+    selectedOrg = { name: "None", code: "000" }
+    selectedCohort = { name: "None", code: "000" }
+
+    research = {
+        projects: [
+            {
+                name: "None",
+                code: "000",
+                organisations: [
+                    {
+                        name: "None",
+                        code: "000",
+                        cohorts: [
+                            {
+                                name: "None",
+                                code: "000"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "Transition to Teaching",
+                code: "T2T",
+                organisations: [
+                    {
+                        name: "Queensland University of Technology",
+                        code: "QUT",
+                        cohorts: [
+                            {
+                                name: "GradDip (Sec)",
+                                code: "001"
+                            },
+                            {
+                                name: "BTeach (Prim) 4th Year",
+                                code: "002"
+                            }
+                        ]
+                    },
+                    {
+                        name: "University of Technology Sydney",
+                        code: "UTS",
+                        cohorts: [
+                            {
+                                name: "UTS Cohort 1",
+                                code: "001"
+                            },
+                            {
+                                name: "UTS Cohort 2",
+                                code: "002"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 
 }
