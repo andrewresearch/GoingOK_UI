@@ -13,6 +13,7 @@ import {GoogleProfileActions} from "../store/actions/googleProfile.actions";
 import {GoogleProfile} from "../store/models/GoogleProfile";
 import {ReflectionsActions} from "../store/actions/reflections.actions";
 import {Reflections} from "../store/models/Reflections";
+import {Common} from "../shared/common";
 
 @Component({    //Main directive loaded in index
     selector: 'navbar',
@@ -39,7 +40,8 @@ export class NavbarComponent implements AfterViewInit {
         private store: Store<AppState>,
         private userActions: UserActions,
         private reflectionsActions: ReflectionsActions,
-        private googleProfileActions: GoogleProfileActions
+        private googleProfileActions: GoogleProfileActions,
+        private common: Common
         //private router: Router
     ) {
         this.user = store.select('user');
@@ -85,6 +87,7 @@ export class NavbarComponent implements AfterViewInit {
     updateReflections = () => {
         this.store.dispatch(this.reflectionsActions.getReflections());
         this.ref.detectChanges();
+        this.reflections.map(ref => {if(ref.reflectionEntries.length > 0) this.common.newUser = true});
     }
 
     public signOut() {

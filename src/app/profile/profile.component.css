@@ -9,3 +9,16 @@
   overflow: -moz-scrollbars-vertical;
   overflow: scroll;
 }
+
+.panel-body dt {
+  width:35%;
+  padding-right: 5px;
+  /* margin-left:auto; */
+  /* display:inline-block; */
+}
+.panel-body dd {
+  width:65%;
+  margin-left:auto;
+  padding-bottom: 10px;
+  /* display:inline-block; */
+}

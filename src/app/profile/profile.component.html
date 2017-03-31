@@ -1,16 +1,23 @@
-
-<div class="row-fluid">
+<!--<div  class="row-fluid">-->
+  <!--<div class = "col-sm-12">-->
+    <!--<div class="jumbotron">-->
+      <!--<h1>Welcome to GoingOK!</h1>-->
+      <!--<p>Here are some instructions for the first time user. Reminder to complete research section.</p>-->
+      <!--<p><a (click)="newUserDone()" class="btn btn-primary btn-lg" href="#" role="button">Get started</a></p>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<div *ngIf="(reflections | async).reflectionEntries.length>0" class="row-fluid">
   <div class = "col-sm-12">
     <reflection-chart [reflections]="(reflections | async)"></reflection-chart>
   </div>
 </div>
-<div>
+
   <div class="row-fluid">
     <!--<div class="col-sm-1"></div>-->
     <div class="col-sm-8">
       <entry (notify)='onNotify($event)'></entry>
       <reflection-list [reflections]="(reflections | async)"></reflection-list>
-
     </div>
     <div class="col-sm-4">
       <div class="panel panel-info">
@@ -48,7 +55,34 @@
             GoingOK Research</h3>
         </div>
         <div class="panel-body">
-          <p class="small">If you are participating in a research project, please ensure that your research settings are up to date.</p>
+          <p class="small">If you are participating in a GoingOK research project, please ensure the settings below are accurate. Note, if you are not participating, the research code will show as: 000-000-000</p>
+
+          <dl class="dl-horizontal left">
+            <dt>Research Code:</dt>
+            <dd>{{selectedResearch()}}</dd>
+            <dt>Project:</dt>
+            <dd><select class="form-control"  [(ngModel)]="selectedProject">
+              <option *ngFor="let p of research.projects" [ngValue]="p"> {{p.name}} </option>
+            </select></dd>
+            <dt>Organisation:</dt>
+            <dd>
+              <select class="form-control" [(ngModel)]="selectedOrg" [disabled]="(selectedProject.name=='None')">
+                <option *ngFor="let o of selectedProject.organisations" [ngValue]="o"> {{o.name}} </option>
+              </select>
+            </dd>
+            <dt>Cohort:</dt>
+            <dd>
+              <select class="form-control" [(ngModel)]="selectedCohort" [disabled]="(selectedOrg.name=='None')">
+                <option *ngFor="let c of selectedOrg.cohorts" [ngValue]="c"> {{c.name}} </option>
+              </select>
+            </dd>
+          </dl>
+
+
+
+
+
+
           <!--<a class="twitter-timeline" href="https://twitter.com/search?q=%23becolqld" data-widget-id="432659641411973120">Tweets about "#becolqld"</a>-->
           <!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>-->
         </div>
@@ -56,5 +90,5 @@
     </div>
     <!--<div class="col-sm-1"></div>-->
   </div>
-</div>
+
 

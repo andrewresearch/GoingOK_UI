@@ -20,8 +20,7 @@ export class User {
 }
 
 export class UserResponse {
-    message: string;
-    results: GokId;
+    id: string;
     session: string;
 }
 

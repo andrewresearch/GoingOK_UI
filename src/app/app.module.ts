@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 //import { AlertModule } from 'ng2-bootstrap'; //Demo for ng2-bootstrap
+import { BsDropdownModule } from 'ng2-bootstrap';
 import { ROUTING } from './app.routes';
 
 //Shared
@@ -44,10 +45,6 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
 
 
 
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,8 +70,8 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
     HttpModule,
     StoreModule.provideStore(reducer),
     EffectsModule.run(UserEffects),
-    EffectsModule.run(ReflectionsEffects)
-    //AlertModule, //Demo for ng2-bootstrap
+    EffectsModule.run(ReflectionsEffects),
+    BsDropdownModule.forRoot()
   ],
   providers: [Common,AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions],
   bootstrap: [AppComponent]

@@ -24,7 +24,8 @@ export class ReflectionsService {
         let entryPkg = { token:"", entry:null };
         entryPkg.token = token;
         entryPkg.entry = entry;
-        return this.http.post(Gok.REFLECTION_ENTRY_URL,JSON.stringify(entryPkg))
+        let options = new RequestOptions({ headers: this.authWithSession(this.common.session) });
+        return this.http.post(Gok.REFLECTION_ENTRY_URL,JSON.stringify(entryPkg),options)
             .map(res => res.json())
             .catch(this._serverError);
     }
