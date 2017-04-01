@@ -6,6 +6,7 @@ import {Injectable} from '@angular/core';
 import {Effect, Actions} from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 
+
 import {AppState} from '../reducers';
 import {UserActions} from '../actions';
 import {UserService} from '../../services';
@@ -13,15 +14,15 @@ import {UserService} from '../../services';
 @Injectable()
 export class UserEffects {
     constructor (
-        private update$: Actions,
+        private action$: Actions,
         private userActions: UserActions,
         private userService: UserService,
     ) {}
 
-    @Effect() authUser$ = this.update$
+    @Effect() authUser$ = this.action$
         .ofType(UserActions.AUTH_USER)
-        .map(action => action.payload)
-        .switchMap(token => this.userService.authUser(token))
+        .map(action => {console.log("IN EFFECT!!"); return action.payload})
+        .switchMap((token:string) => this.userService.authUser(token))
         .map(userResponse => this.userActions.getUserSuccess(userResponse));
 
     // @Effect() checkConnect$ = this.update$

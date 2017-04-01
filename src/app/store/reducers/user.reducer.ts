@@ -28,6 +28,10 @@ export default function (state = initialState, action: Action): UserState {
         //     state.google_token = "";
         //     return newState;
         // }
+        case UserActions.AUTH_USER: {
+            //This is handled by user.effects
+            return state;
+        }
         case UserActions.RESET_USER: {
             return initialState;
         }
@@ -39,6 +43,7 @@ export default function (state = initialState, action: Action): UserState {
             state.id = response.id;
             console.log("Session: "+ response.session)
             state.session = response.session;
+            state.isSignedIn = true;
             state.isAuthorised = true;
             return state;
         }

@@ -21,6 +21,7 @@ export class ReflectionsService {
 
     saveReflectionEntry(entry:ReflectionEntry,token:string) {
         //create an entry package
+        console.log("Saving reflection to server");
         let entryPkg = { token:"", entry:null };
         entryPkg.token = token;
         entryPkg.entry = entry;
@@ -31,6 +32,7 @@ export class ReflectionsService {
     }
 
     getReflections(): Observable<Reflections> {
+        console.log("Getting reflections from server");
         let options = new RequestOptions({ headers: this.authWithSession(this.authService.authInfo.session) });
         return this.http.get(Gok.REFLECTIONS_URL,options)
             .map(this.extractReflections)

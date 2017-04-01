@@ -16,15 +16,17 @@ export class UserService {
     constructor (private http: Http, private authService:AuthenticationService) {}
 
     authUser(token): Observable<UserResponse> {
-        console.log("Authorising user");
-        return this.http.post(Gok.AUTH_URL,token)
-            .map(this.sessionAndUser)
-            .catch(this._serverError);
+        console.log("Authorising user with token: "+token);
+        let response =  this.http.post(Gok.AUTH_URL,token);
+        response.map(res => console.log("SERVER RESPONSE: "+res.json()));
+        return response.map(this.sessionAndUser);
+            //.catch(this._serverError);
     }
 
     sessionAndUser = (response:Response): UserResponse => {
         console.log("Extracting session and user data from response");
         let ur:UserResponse = response.json()
+        console.log("RESPONSE: "+JSON.stringify(ur))
         if (response.headers.has(Gok.SET_AUTH_HEADER)) {
             let session = response.headers.get(Gok.SET_AUTH_HEADER);
             console.log("Session is: " + session);

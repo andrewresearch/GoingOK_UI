@@ -38,6 +38,7 @@ export class AuthenticationService {
     }
 
 
+
     onSignIn(googleUser) {
         let profile = googleUser.getBasicProfile();
         this.authInfo.gToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
@@ -46,6 +47,7 @@ export class AuthenticationService {
         //Now authorise with GoingOK server if necessary
         this.authInfo.signedIn = true;
         if(!this.authInfo.authorised || (this.authInfo.session=="")) {
+            console.log("User not authorised or session not set. Authorising with server...")
             this.goingOkAuthorisation()
         }
         return profile;

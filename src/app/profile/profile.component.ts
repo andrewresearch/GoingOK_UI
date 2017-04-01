@@ -33,6 +33,8 @@ export class ProfileComponent {
 
     newUser: boolean = false;
 
+    isAuthorised: boolean = false;
+
     constructor(
         private store: Store<AppState>,
         private userActions: UserActions,
@@ -44,6 +46,15 @@ export class ProfileComponent {
         this.reflections = store.select('reflections');
     }
 
+    ngDoCheck() {
+        //TODO This is a problem. Need to find another way of updating reflections.
+        // if(!(this.isAuthorised && this.authService.authInfo.authorised)) {
+        //     this.isAuthorised = this.authService.authInfo.authorised;
+        //     if(this.isAuthorised) {
+        //         this.updateReflections();
+        //     }
+        // }
+    }
 
     toggleSignIn() {
         this.authService.authInfo.signedIn = !this.authService.authInfo.signedIn
@@ -66,6 +77,7 @@ export class ProfileComponent {
     }
 
     public updateReflections() {
+        console.log("Updating reflections...")
         this.store.dispatch(this.reflectionsActions.getReflections());
     }
 
