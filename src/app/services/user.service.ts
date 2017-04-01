@@ -5,33 +5,32 @@
 import { Injectable }     from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
-
-import {User, UserResponse} from "../models";
+import {User, UserResponse} from "../store/models";
 import {Gok} from './gok.globals';
-import {Common} from "../../shared/common";
+import {AuthenticationService} from "./authentication.service";
 
 
 @Injectable()
 export class UserService {
 
-    constructor (private http: Http, private common:Common) {}
+    constructor (private http: Http, private authService:AuthenticationService) {}
 
     authUser(token): Observable<UserResponse> {
-        console.log("Authorising user");
-        return this.http.post(Gok.AUTH_URL,token)
-            .map(this.sessionAndUser)
-            .catch(this._serverError);
+        console.log("Authorising user with token: "+token);
+        let response =  this.http.post(Gok.AUTH_URL,token);
+        response.map(res => console.log("SERVER RESPONSE: "+res.json()));
+        return response.map(this.sessionAndUser);
+            //.catch(this._serverError);
     }
 
     sessionAndUser = (response:Response): UserResponse => {
         console.log("Extracting session and user data from response");
         let ur:UserResponse = response.json()
+        console.log("RESPONSE: "+JSON.stringify(ur))
         if (response.headers.has(Gok.SET_AUTH_HEADER)) {
             let session = response.headers.get(Gok.SET_AUTH_HEADER);
             console.log("Session is: " + session);
-            this.common.session = session;
+            this.authService.authInfo.session = session;
             ur.session = session;
         } else {
             console.log("No Session provided");

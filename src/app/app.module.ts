@@ -8,8 +8,7 @@ import { BsDropdownModule } from 'ng2-bootstrap';
 import { ROUTING } from './app.routes';
 
 //Shared
-import {AuthGuard} from './shared/AuthGuardService';
-import {Common} from "./shared/common";
+import {AuthGuard} from './services';
 import {AuthenticationService} from './services/authentication.service';
 
 //ngrx
@@ -17,7 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import {EffectsModule} from "@ngrx/effects";
 import reducer from './store/reducers';
 import {UserActions,ReflectionsActions} from "./store/actions";
-import {UserService,ReflectionsService} from "./store/services";
+import {UserService,ReflectionsService} from "./services";
 import {UserEffects,ReflectionsEffects} from "./store/effects";
 
 //Components
@@ -42,24 +41,16 @@ import {T2tComponent} from "./projects/t2t/t2t.component";
 import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.component";
 import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
 
-
+//DevTools
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    LoginComponent,
-    AboutComponent,
-    ProfileComponent,
-      MessageComponent,
-      ReflectionChartComponent,
-      EntryComponent,
-      SliderComponent,
-      ReflectionsComponent,
-      ProjectsComponent,
-      T2tComponent,
-      PageNotFoundComponent,
-      //LoginComponent
+    NavbarComponent, LoginComponent, AboutComponent,
+    ProfileComponent,ReflectionChartComponent, EntryComponent, SliderComponent, ReflectionsComponent,
+    MessageComponent, PageNotFoundComponent,
+    ProjectsComponent, T2tComponent
   ],
   imports: [
     BrowserModule,
@@ -67,11 +58,17 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
     FormsModule,
     HttpModule,
     StoreModule.provideStore(reducer),
-    EffectsModule.run(UserEffects),
-    EffectsModule.run(ReflectionsEffects),
+    EffectsModule.runAfterBootstrap(UserEffects),
+    EffectsModule.runAfterBootstrap(ReflectionsEffects),
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
+      maxAge: 5
+    }),
     BsDropdownModule.forRoot()
   ],
-  providers: [Common,AuthGuard,UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions,AuthenticationService],
+  providers: [
+      AuthGuard,AuthenticationService,
+      UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

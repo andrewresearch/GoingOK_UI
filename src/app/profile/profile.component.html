@@ -7,7 +7,29 @@
     <!--</div>-->
   <!--</div>-->
 <!--</div>-->
-<div *ngIf="(reflections | async).reflectionEntries.length>0" class="row-fluid">
+<!--*ngIf="(reflections | async).reflectionEntries.length>0"-->
+<div  class="row-fluid">
+  <div class = "col-sm-12">
+    <div class="panel panel-info">
+      <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-tasks"></span> Dev Info</h5></div>
+      <div id="goingokMessage" class="panel-body small">
+
+        <p> <button (click)="toggleSignIn()"> signIn </button> <button (click)="toggleAuthorised()"> authorised </button> </p>
+        <p>User ID: {{ (getUser()| async).id }}</p>
+        <p>Store session: {{(getUser()| async).session}}</p>
+        <p>AuthInfo session: {{authService?.authInfo.session}}</p>
+        <!--<p>Current session: {{currentSession}}</p>-->
+        <button (click)="loadDummy()"> dummy reflections </button><button (click)="updateReflections()"> update reflections </button>
+        <p></p>
+        <p>Timestamp: {{ (getCurrentEntry()|async).timestamp }} </p>
+        <p>Point: {{ (getCurrentEntry()|async).reflection.point }} </p>
+        <p>Text: {{ (getCurrentEntry()|async).reflection.text }} </p>
+        <p>Reflections: {{ (getReflections()| async) }}</p>
+
+      </div>
+      <div class="text-center"><span class="glyphicon glyphicon-chevron-down"></span></div>
+    </div>
+  </div>
   <div class = "col-sm-12">
     <reflection-chart [reflections]="(reflections | async)"></reflection-chart>
   </div>
@@ -20,24 +42,6 @@
       <reflection-list [reflections]="(reflections | async)"></reflection-list>
     </div>
     <div class="col-sm-4">
-      <div class="panel panel-info">
-        <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-tasks"></span> Dev Info</h5></div>
-        <div id="goingokMessage" class="panel-body small">
-
-          <p> <button (click)="toggleSignIn()"> signIn </button> <button (click)="toggleAuthorised()"> authorised </button> </p>
-          <p>User ID: {{ (getUser()| async).id }}</p>
-          <!--<p>Current session: {{currentSession}}</p>-->
-          <button (click)="loadDummy()"> dummy reflections </button><button (click)="updateReflections()"> update reflections </button>
-          <p></p>
-          <p>Timestamp: {{ (getCurrentEntry()|async).timestamp }} </p>
-          <p>Point: {{ (getCurrentEntry()|async).reflection.point }} </p>
-          <p>Text: {{ (getCurrentEntry()|async).reflection.text }} </p>
-          <p>Reflections: {{ (getReflections()| async) }}</p>
-
-        </div>
-        <div class="text-center"><span class="glyphicon glyphicon-chevron-down"></span></div>
-      </div>
-
       <div class="panel panel-info">
         <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-bullhorn"></span> GoingOK Messages</h5></div>
         <div id="goingokMessage" class="panel-body small">

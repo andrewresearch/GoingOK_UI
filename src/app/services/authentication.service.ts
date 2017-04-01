@@ -21,7 +21,9 @@ export class AuthenticationService {
 
     public   authInfo = {
         signedIn: false,
-        authorised: false
+        authorised: false,
+        session: "",
+        gToken: ""
     }
 
 
@@ -36,10 +38,18 @@ export class AuthenticationService {
     }
 
 
+
     onSignIn(googleUser) {
         let profile = googleUser.getBasicProfile();
+        this.authInfo.gToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+        this.updateGoogleProfile(profile);
         //this.logProfileToConsole(profile);
+        //Now authorise with GoingOK server if necessary
         this.authInfo.signedIn = true;
+        if(!this.authInfo.authorised || (this.authInfo.session=="")) {
+            console.log("User not authorised or session not set. Authorising with server...")
+            this.goingOkAuthorisation()
+        }
         return profile;
     }
 
@@ -47,6 +57,10 @@ export class AuthenticationService {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut();
         this.authInfo.signedIn = false;
+        if(this.authInfo.authorised || !(this.authInfo.session=="")) {
+            this.authInfo.session = "";
+            this.authInfo.authorised = false;
+        }
     }
 
     ngOnInit() {
@@ -58,24 +72,22 @@ export class AuthenticationService {
 
     goingOkAuthorisation() {
         console.log("<<<< GOINGOK AUTH >>>>");
-        //this.store.dispatch(this.uActions.authUser(this.googleToken()));
+        this.store.dispatch(this.uActions.authUser(this.authInfo.gToken));
+        this.authInfo.authorised = true;
     }
 
-    // googleToken():string {
-    //     return this.gUser.getAuthResponse().id_token;
-    // }
-    //
-    // updateGoogleProfile() {
-    //     console.log("... updating Google Profile in store ...");
-    //     let gp = new GoogleProfile();
-    //     gp.id = this.gProfile.getId();
-    //     gp.name = this.gProfile.getName();
-    //     gp.email = this.gProfile.getEmail();
-    //     gp.image_url = this.gProfile.getImageUrl();
-    //     gp.token = this.googleToken();
-    //     this.store.dispatch(this.gpActions.saveProfile(gp));
-    // }
-    //
+
+
+    updateGoogleProfile(profile) {
+        console.log("... updating Google Profile in store ...");
+        let gp = new GoogleProfile();
+        gp.id = profile.getId();
+        gp.name = profile.getName();
+        gp.email = profile.getEmail();
+        gp.image_url = profile.getImageUrl();
+        this.store.dispatch(this.gpActions.saveProfile(gp));
+    }
+
 
 
     logProfileToConsole(profile) {
