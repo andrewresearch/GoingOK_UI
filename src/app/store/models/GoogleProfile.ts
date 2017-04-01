@@ -7,14 +7,12 @@ export class GoogleProfile {
     name: string;
     email: string;
     image_url: string;
-    token: string;
 
     constructor() {
         this.id = "";
         this.name = "";
         this.email = "";
         this.image_url = "";
-        this.token = "";
 
     }
 }
