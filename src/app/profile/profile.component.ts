@@ -2,7 +2,7 @@
  * Created by andrew on 6/06/2016.
  */
 
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 
@@ -26,7 +26,7 @@ import {AuthenticationService} from "../services/authentication.service";
     styleUrls: ['profile.component.css'],
 })
 
-export class ProfileComponent {
+export class ProfileComponent implements AfterViewInit {
 
     private user: Observable<User>;
     private reflections: Observable<Reflections>;
@@ -43,6 +43,10 @@ export class ProfileComponent {
     ) {
         this.user = store.select('user');
         this.reflections = store.select('reflections');
+    }
+
+    ngAfterViewInit() {
+        this.updateReflections();
     }
 
     // ngDoCheck() {
