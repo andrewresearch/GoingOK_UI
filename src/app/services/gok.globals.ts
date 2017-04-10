@@ -8,8 +8,9 @@ export namespace Gok {
     export const API_URL = 'http://localhost:8080/v1';
     export const USER_URL = API_URL + '/user';
     export const AUTH_URL = API_URL + '/client/auth';
-    export const REFLECTIONS_URL = API_URL + '/client/profile';
-    export const REFLECTION_ENTRY_URL = REFLECTIONS_URL + '/entry';
+    export const PROFILE_URL = API_URL + '/client/profile';
+    export const REFLECTION_ENTRY_URL = PROFILE_URL + '/reflection';
+    export const RESEARCH_ENTRY_URL = PROFILE_URL + '/research';
     //Headers
     export const SET_AUTH_HEADER = "Set-Authorization";
     export const AUTH_HEADER = "Authorization";

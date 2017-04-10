@@ -4,7 +4,7 @@
 
 
 import {AuthGuard} from "./authguard.service";
-import {ReflectionsService} from "./reflections.service";
+import {ProfileService} from "./profile.service";
 import {UserService} from "./user.service";
 import {AuthenticationService} from "./authentication.service";
 
@@ -12,12 +12,12 @@ export {
     AuthenticationService,
     AuthGuard,
     UserService,
-    ReflectionsService
+    ProfileService
 }
 
 export default [
     AuthenticationService,
     AuthGuard,
     UserService,
-    ReflectionsService
+    ProfileService
 ]

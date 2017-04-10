@@ -6,14 +6,20 @@
 import {Injectable} from "@angular/core";
 import {Profile} from "../models/Profile";
 import {Action} from "@ngrx/store";
+import {ReflectionEntry} from "../models/Reflections";
+import {ResearchChoice} from "../models/ResearchParticipation";
 
 @Injectable()
 export class ProfileActions {
 
-    static LOAD_DUMMY = '[Profile] Load Dummy';
     static GET_PROFILE = '[Profile] Get Profile';
     static GET_PROFILE_SUCCESS = '[Profile] Get Profile Success';
+    static SAVE_REFLECTION = '[Profile] Save Reflection';
+    static SAVE_REFLECTION_RESULT = '[Profile] Save Reflection Result';
+    static SAVE_RESEARCH = '[Profile] Save Research';
+    static SAVE_RESEARCH_RESULT = '[Profile] Save Research Result';
     static RESET_PROFILE = '[Profile] Reset Profile';
+    static LOAD_DUMMY = '[Profile] Load Dummy';
 
 
     getProfile(): Action {
@@ -27,6 +33,33 @@ export class ProfileActions {
         return {
             type: ProfileActions.GET_PROFILE_SUCCESS,
             payload: profile
+        };
+    }
+
+    saveReflection(ref:ReflectionEntry): Action {
+        return {
+            type: ProfileActions.SAVE_REFLECTION,
+            payload: ref
+        };
+    }
+
+    saveReflectionResult(result): Action {
+        return {
+            type: ProfileActions.SAVE_REFLECTION_RESULT,
+            payload: result
+        };
+    }
+    saveResearch(research:ResearchChoice): Action {
+        return {
+            type: ProfileActions.SAVE_RESEARCH,
+            payload: research
+        };
+    }
+
+    saveResearchResult(result): Action {
+        return {
+            type: ProfileActions.SAVE_RESEARCH_RESULT,
+            payload: result
         };
     }
 

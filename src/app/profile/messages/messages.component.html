@@ -3,8 +3,8 @@
   <div id="goingokMessage" class="panel-body small">
     <div *ngIf='dataLoaded()'>
       <div *ngFor="let message of getMessages()">
-        <strong>{{message.title}}</strong>&nbsp;<span>{{message.timestamp | date:'dd MMM yyyy'}}</span>
-        <div>{{message.text}}</div>
+        <p><strong>{{message.title}}</strong>&nbsp;<span>[{{message.timestamp | date:'dd MMM yyyy'}}]</span></p>
+        <div [innerHTML]="message.text"></div>
         <div>{{message.value.toString()}}</div>
         <hr />
       </div>

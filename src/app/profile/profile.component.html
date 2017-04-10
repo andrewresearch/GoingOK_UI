@@ -6,7 +6,7 @@
         <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-tasks"></span> Dev Info</h5></div>
         <div id="devPanel" class="panel-body small">
 
-          <div class="alert-info"><p> <button (click)="updateReflections()"> update reflections </button><button (click)="loadDummy()"> dummy reflections </button><button (click)="toggleSignIn()"> signIn </button> <button (click)="toggleAuthorised()"> authorised </button> </p>
+          <div class="alert-info"><p><button (click)="updateProfile()"> update profile </button> <button (click)="updateReflections()"> update reflections </button><button (click)="loadDummy()"> dummy reflections </button><button (click)="toggleSignIn()"> signIn </button> <button (click)="toggleAuthorised()"> authorised </button> </p>
           </div>
 
           <div>
@@ -20,23 +20,27 @@
               <tbody>
               <tr>
                 <td>AuthInfo</td>
-                <td>{{getAuthInfo()}}</td>
+                <td>{{getAuthInfoAsString()}}</td>
               </tr>
               <tr>
                 <td>Current Entry</td>
-                <td>{{(getCurrentEntry()|async)}}</td>
+                <td>{{(getCurrentEntryAsString()|async)}}</td>
               </tr>
               <tr>
                 <td>Research Choice</td>
-                <td>{{(getResearchChoice())}}</td>
+                <td>{{(getResearchChoiceAsString())}}</td>
               </tr>
               <tr>
                 <td>User</td>
-                <td>{{(getUser()|async)}}</td>
+                <td>{{(getUserAsString()|async)}}</td>
+              </tr>
+              <tr>
+                <td>Profile</td>
+                <td>{{(getProfileAsString()|async)}}</td>
               </tr>
               <tr>
                 <td>Reflections</td>
-                <td>{{(getReflections()|async)}}</td>
+                <td>{{(getReflectionsAsString()|async)}}</td>
               </tr>
               </tbody>
             </table>
@@ -49,53 +53,21 @@
 
   <div id="reflectchart-content" class="row-fluid">
     <div class = "col-sm-12">
-      <reflection-chart [reflections]="(reflections | async)"></reflection-chart>
+      <reflection-chart [reflections]="(getReflections() | async)"></reflection-chart>
     </div>
   </div>
 
   <div id="main-content" class="row-fluid">
 
     <div id="main-left-column" class="col-sm-8">
-      <entry (notify)='onNotify($event)'></entry>
-      <reflection-list [reflections]="(reflections | async)"></reflection-list>
+      <entry (notify)='newReflection($event)'></entry>
+      <reflection-list [reflections]="(getReflections() | async)"></reflection-list>
     </div>
 
     <div id="main-right-column" class="col-sm-4">
-      <messages-list [messages]="(messages | async)"></messages-list>
-
-
-      <div id="research-content" class="panel panel-warning">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="glyphicon glyphicon-education"></span> GoingOK Research</h3>
-        </div>
-        <div class="panel-body">
-          <p class="small">If you are participating in a GoingOK research project, please ensure the settings below are accurate. Note, if you are not participating, the research code will show as: NON-NON-NON</p>
-
-          <dl class="dl-horizontal left">
-            <dt>Research Code:</dt>
-            <dd>{{researchChoice?.code()}}&nbsp;</dd>
-
-            <dt>Project:</dt>
-            <dd><select class="form-control"  [(ngModel)]="researchChoice.project">
-              <option *ngFor="let p of researchChoices.projects" [ngValue]="p" [selected]="(p.code==researchChoice.project.code)"> {{p.name}} </option>
-            </select></dd>
-            <dt>Organisation:</dt>
-            <dd>
-              <select class="form-control" [(ngModel)]="researchChoice.organisation" [disabled]="(researchChoice.project.name=='None')">
-                <option *ngFor="let o of researchChoices.organisations" [ngValue]="o" [selected]="(o.code==researchChoice.organisation.code)"> {{o.name}} </option>
-              </select>
-            </dd>
-            <dt>Cohort:</dt>
-            <dd>
-              <select class="form-control" [(ngModel)]="researchChoice.cohort" [disabled]="(researchChoice.organisation.name=='None')">
-                <option *ngFor="let c of researchChoices.cohorts" [ngValue]="c"[selected]="(c.code==researchChoice.cohort.code)" > {{c.name}} </option>
-              </select>
-            </dd>
-            <dt>&nbsp;</dt>
-            <dd><button class="btn btn-sm btn-default" (click)="saveResearchChoice()">Save</button></dd>
-          </dl>
-        </div>
-      </div><!-- research -->
+      <message-list [messages]="(getMessages() | async)"></message-list>
+      <!--<div>{{getResearchChoice() | async}}</div>-->
+      <research [research] = "(getResearchChoice() | async)" (notify)='newResearch($event)'></research>
     </div><!--right-column-->
   </div><!--main-content-->
   <div class="row-fluid">

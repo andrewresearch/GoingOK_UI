@@ -21,7 +21,7 @@ export class SliderComponent implements AfterViewInit {
     public currentPoint: number;
 
     private setThePoint = (n:number) => {
-        console.log("Setting the point to: "+n);
+        //console.log("Setting the point to: "+n);
         this.notify.emit(n);
         this.currentPoint = n;
     }

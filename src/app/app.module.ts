@@ -15,9 +15,10 @@ import {AuthenticationService} from './services/authentication.service';
 import { StoreModule } from '@ngrx/store';
 import {EffectsModule} from "@ngrx/effects";
 import reducer from './store/reducers';
-import {UserActions,ReflectionsActions} from "./store/actions";
-import {UserService,ReflectionsService} from "./services";
-import {UserEffects,ReflectionsEffects} from "./store/effects";
+import {UserActions,ProfileActions} from "./store/actions";
+import {UserService,ProfileService} from "./services";
+import {UserEffects,ProfileEffects} from "./store/effects";
+
 
 //Components
 import { AppComponent } from './app.component';
@@ -35,6 +36,7 @@ import { EntryComponent } from './profile/entry/entry.component';
 import { SliderComponent } from './profile/entry/slider/slider.component';
 import { ReflectionChartComponent } from './profile/reflectionChart/reflectionChart.component';
 import { ReflectionsComponent } from './profile/reflections/reflections.component';
+import {ResearchComponent} from "./profile/research/research.component";
 
 //Projects
 import {ProjectsComponent} from "./projects/projects.component";
@@ -45,11 +47,13 @@ import {GoogleProfileActions} from "./store/actions/googleProfile.actions";
 //DevTools
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent, LoginComponent, AboutComponent,
-    ProfileComponent,MessagesComponent,ReflectionChartComponent, EntryComponent, SliderComponent, ReflectionsComponent,
+    ProfileComponent,MessagesComponent,ReflectionChartComponent, EntryComponent, SliderComponent, ReflectionsComponent,ResearchComponent,
     PageNotFoundComponent,
     ProjectsComponent, T2tComponent
   ],
@@ -60,7 +64,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpModule,
     StoreModule.provideStore(reducer),
     EffectsModule.runAfterBootstrap(UserEffects),
-    EffectsModule.runAfterBootstrap(ReflectionsEffects),
+    EffectsModule.runAfterBootstrap(ProfileEffects),
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
     }),
@@ -68,7 +72,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   ],
   providers: [
       AuthGuard,AuthenticationService,
-      UserActions,UserService,ReflectionsActions,ReflectionsService,GoogleProfileActions
+      UserActions,ProfileActions,ProfileService,UserService,GoogleProfileActions
   ],
   bootstrap: [AppComponent]
 })

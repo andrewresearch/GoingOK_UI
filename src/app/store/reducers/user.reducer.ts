@@ -14,20 +14,6 @@ const initialState: UserState = new User();
 
 export default function (state = initialState, action: Action): UserState {
     switch (action.type) {
-        // case UserActions.SIGNED_IN: {
-        //     console.log("User Signed In");
-        //     let newState = new User();
-        //     newState.isSignedIn = true;
-        //     newState.google_token = action.payload;
-        //     return newState;
-        // }
-        // case UserActions.SIGNED_OUT: {
-        //     console.log("User Signed Out");
-        //     let newState = new User();
-        //     state.isSignedIn = false;
-        //     state.google_token = "";
-        //     return newState;
-        // }
         case UserActions.AUTH_USER: {
             //This is handled by user.effects
             return state;
@@ -36,19 +22,19 @@ export default function (state = initialState, action: Action): UserState {
             return initialState;
         }
         case UserActions.GET_USER_SUCCESS: {
-            console.log("GET_USER_SUCCESS payload: "+JSON.stringify(action.payload));
+            //console.log("GET_USER_SUCCESS payload: "+JSON.stringify(action.payload));
             let response:UserResponse = action.payload
             //console.log("Message: "+ response.message)
-            console.log("Gok ID: "+ response.id)
+            console.info("GoingOK ID: "+ response.id)
             state.id = response.id;
-            console.log("Session: "+ response.session)
+            //console.log("Session: "+ response.session)
             state.session = response.session;
             state.isSignedIn = true;
             state.isAuthorised = true;
             return state;
         }
         case UserActions.CHECK_CONNECT_RESULT: {
-            console.log("CHECK_CONNECT_RESULT payload: "+JSON.stringify(action.payload));
+            //console.log("CHECK_CONNECT_RESULT payload: "+JSON.stringify(action.payload));
             return state;
         }
         default: {

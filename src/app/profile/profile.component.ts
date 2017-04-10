@@ -4,16 +4,17 @@
 
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 import {EntryComponent} from './entry/entry.component';
 import {ReflectionChartComponent} from './reflectionChart/reflectionChart.component';
 
 import {AppState} from "../store/reducers";
-import {ReflectionsActions, UserActions} from "../store/actions";
+import {ProfileActions, UserActions} from "../store/actions";
 
-import {User,Reflection, ReflectionEntry, Reflections,ResearchChoice,ResearchChoices} from "../store/models";
+import {User,Reflection, ReflectionEntry, Profile,ResearchChoice,ResearchChoices} from "../store/models";
 import {AuthenticationService} from "../services/authentication.service";
+
 
 
 
@@ -27,56 +28,64 @@ import {AuthenticationService} from "../services/authentication.service";
 export class ProfileComponent implements AfterViewInit {
 
     private user: Observable<User>;
-    private reflections: Observable<Reflections>;
-
-    private researchChoice: ResearchChoice = new ResearchChoice();
-    private researchChoices: ResearchChoices = new ResearchChoices();
+    private profile: Observable<Profile>;
 
     private DEVELOPER_MODE = false;
 
     constructor(
         private store: Store<AppState>,
         private userActions: UserActions,
-        private reflectionsActions: ReflectionsActions,
+        private profileActions: ProfileActions,
         private authService: AuthenticationService,
         private cdr: ChangeDetectorRef
-        //private router: Router
     ) {
         this.user = store.select('user');
-        this.reflections = store.select('reflections');
+        this.profile = store.select('profile');
     }
 
     ngAfterViewInit() {
-        this.updateReflections();
+        this.getProfile();
     }
 
-    // ngDoCheck() {
-    //     //TODO This is a problem. Need to find another way of updating reflections.
-    //     // if(!(this.isAuthorised && this.authService.authInfo.authorised)) {
-    //     //     this.isAuthorised = this.authService.authInfo.authorised;
-    //     //     if(this.isAuthorised) {
-    //     //         this.updateReflections();
-    //     //     }
-    //     // }
-    // }
-
-    public updateReflections() {
-        console.info("Updating reflections...")
-        this.store.dispatch(this.reflectionsActions.getReflections());
+    public getProfile() {
+        console.info("Getting profile...")
+        this.store.dispatch(this.profileActions.getProfile());
     }
 
-    onNotify(ref:Reflection):void {
+    public getMessages() {
+        return this.profile.map( p => p.messages);
+    }
+
+    public getReflections() {
+        return this.profile.map( p => p.reflectionEntries);
+    }
+
+    public getResearchChoice() {
+        return this.profile.map(p => {
+            //console.log("profile: "+JSON.stringify(p));
+            let r = p.research;
+            //console.log("getResearchChoice(): "+JSON.stringify(r));
+            return r;
+        });
+    }
+
+
+
+
+    newReflection(ref:Reflection):void {
         //this.currentReflection = ref;
         let entry = new ReflectionEntry();
         entry.reflection = ref;
         //console.log("Notify message: "+JSON.stringify(entry));
-        this.store.dispatch(this.reflectionsActions.addReflection(entry));
+        this.store.dispatch(this.profileActions.saveReflection(entry));
     }
 
-    public saveResearchChoice() {
-        console.info("Save choice to server: "+JSON.stringify(this.researchChoice));
-
+    newResearch(rc:ResearchChoice):void {
+        //console.log("Notify message: "+JSON.stringify(rc));
+        this.store.dispatch(this.profileActions.saveResearch(rc));
     }
+
+
 
 
 
@@ -91,10 +100,10 @@ export class ProfileComponent implements AfterViewInit {
         console.warn("DEV_MODE: "+this.DEVELOPER_MODE);
     }
 
-    public loadDummy() {
-        this.store.dispatch(this.reflectionsActions.loadDummy());
-        console.log("DEV_MODE: Loaded dummy data into the store");
-    }
+    // public loadDummy() {
+    //     this.store.dispatch(this.reflectionsActions.loadDummy());
+    //     console.log("DEV_MODE: Loaded dummy data into the store");
+    // }
 
     toggleSignIn() {
         this.authService.authInfo.signedIn = !this.authService.authInfo.signedIn;
@@ -105,31 +114,40 @@ export class ProfileComponent implements AfterViewInit {
         console.log("DEV_MODE: Toggled authInfo.authorised to "+this.authService.authInfo.authorised);
     }
 
-    public getAuthInfo():string {
+    public getAuthInfoAsString():string {
         //console.log("DEV_MODE: authInfo ...");
         return JSON.stringify(this.authService.authInfo);
     }
 
-    public getCurrentEntry():Observable<string> {
+    public getCurrentEntryAsString():Observable<string> {
         //console.log("DEV_MODE: current entry ...");
-        return this.reflections.map( refs => JSON.stringify(refs.currentEntry));
+        //return this.reflections.map( refs => JSON.stringify(refs.currentEntry));
+        //TODO Get Current Entry from profile
+        return new BehaviorSubject("nothing here yet")
     }
 
-    public getResearchChoice():string {
+    public getResearchChoiceAsString():string {
         //console.log("DEV_MODE: selectedResearch ...");
-        return JSON.stringify(this.researchChoice);
+        return "nothing yet";  //JSON.stringify(this.researchChoice);
     }
 
-    public getUser():Observable<string> {
+    public getUserAsString():Observable<string> {
         //console.log("DEV_MODE: this.user ...");
         return this.user.map( usr => JSON.stringify(usr));
 
     }
 
-    public getReflections():Observable<string> {
+    public getReflectionsAsString():Observable<string> {
         //console.log("DEV_MODE: this.reflections ...");
-        return this.reflections.map( refs => JSON.stringify(refs.reflectionEntries));
+        //return this.reflections.map( refs => JSON.stringify(refs.reflectionEntries));
+        return this.profile.map( prof => JSON.stringify(prof.reflectionEntries));
     }
+
+    public getProfileAsString():Observable<string> {
+        //console.log("DEV_MODE: this.profile ...");
+        return this.profile.map( prof => JSON.stringify(prof));
+    }
+
 
 
 

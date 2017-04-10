@@ -47,7 +47,7 @@ export class AuthenticationService {
         //Now authorise with GoingOK server if necessary
         this.authInfo.signedIn = true;
         if(!this.authInfo.authorised || (this.authInfo.session=="")) {
-            console.log("User not authorised or session not set. Authorising with server...")
+            console.info("User not authorised or session not set. Authorising with server...")
             this.goingOkAuthorisation()
         }
         return profile;
@@ -71,7 +71,7 @@ export class AuthenticationService {
     }
 
     goingOkAuthorisation() {
-        console.log("<<<< GOINGOK AUTH >>>>");
+        //console.log("<<<< GOINGOK AUTH >>>>");
         this.store.dispatch(this.uActions.authUser(this.authInfo.gToken));
         this.authInfo.authorised = true;
     }
@@ -79,7 +79,7 @@ export class AuthenticationService {
 
 
     updateGoogleProfile(profile) {
-        console.log("... updating Google Profile in store ...");
+        //console.log("... updating Google Profile in store ...");
         let gp = new GoogleProfile();
         gp.id = profile.getId();
         gp.name = profile.getName();

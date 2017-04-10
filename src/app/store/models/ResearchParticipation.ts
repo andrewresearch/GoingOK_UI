@@ -23,7 +23,7 @@ export class ResearchChoice {
         this.organisation = new ResearchEntry();
         this.cohort = new ResearchEntry();
     }
-    code() {
+    code = () => {
         return this.project.code + "-" +
             this.organisation.code + "-" +
             this.cohort.code

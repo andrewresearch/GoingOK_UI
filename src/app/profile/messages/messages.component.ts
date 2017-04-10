@@ -12,6 +12,7 @@ import {Message} from "../../store/models/Profile";
 })
 
 export class MessagesComponent {
+
     @Input() messages:Message[];
 
     public dataLoaded() {

@@ -3,14 +3,14 @@
  */
 
 import {UserEffects} from './user.effects';
-import {ReflectionsEffects} from './reflections.effects';
+import {ProfileEffects} from './profile.effects';
 
 export {
     UserEffects,
-    ReflectionsEffects
+    ProfileEffects
 };
 
 export default [
     UserEffects,
-    ReflectionsEffects
+    ProfileEffects
 ];
