@@ -21,12 +21,12 @@ export class EntryComponent {
     public reflectText:string;
 
     onNotify(sVal:number):void {
-        console.log("Received from slider: "+sVal);
+        //console.log("Received from slider: "+sVal);
         this.sliderValue = sVal;
     }
 
     public saveEntry() {
-            console.log("Setting the text to: " + this.reflectText);
+            //console.log("Setting the text to: " + this.reflectText);
             let ref = new Reflection();
             ref.point = this.sliderValue*100;
             ref.text = this.reflectText;

@@ -1,0 +1,14 @@
+<div id="messages-list" class="panel panel-info">
+  <div class="panel-heading"><h5 class="panel-title"><span class="glyphicon glyphicon-bullhorn"></span> GoingOK Messages</h5></div>
+  <div id="goingokMessage" class="panel-body small">
+    <div *ngIf='dataLoaded()'>
+      <div *ngFor="let message of getMessages()">
+        <p><strong>{{message.title}}</strong>&nbsp;<span>[{{message.timestamp | date:'dd MMM yyyy'}}]</span></p>
+        <div [innerHTML]="message.text"></div>
+        <div>{{message.value.toString()}}</div>
+        <hr />
+      </div>
+    </div>
+  </div>
+  <div class="text-center"><span class="glyphicon glyphicon-chevron-down"></span></div>
+</div>

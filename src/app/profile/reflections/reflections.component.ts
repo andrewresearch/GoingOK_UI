@@ -3,7 +3,8 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {Reflections} from "../../store/models/Reflections";
+import {ReflectionEntry} from "../../store/models/Reflections";
+import {Profile} from "../../store/models/Profile";
 
 @Component({
     selector: 'reflection-list',
@@ -13,13 +14,13 @@ import {Reflections} from "../../store/models/Reflections";
 
 export class ReflectionsComponent {
 
-    @Input() reflections:Reflections;
+    @Input() reflections:ReflectionEntry[];
 
     public dataLoaded() {
-        return (this.reflections.reflectionEntries.length > 0)
+        return (this.reflections.length > 0)
     }
 
     public getReflections() {
-        return this.reflections.reflectionEntries;
+        return this.reflections;
     }
 }

@@ -3,16 +3,19 @@
  */
 
 import {UserActions} from './user.actions';
-import {ReflectionsActions} from './reflections.actions';
+//import {ReflectionsActions} from './reflections.actions';
 import {GoogleProfileActions} from './googleProfile.actions';
+import {ProfileActions} from "./profile.actions";
 export {
     UserActions,
-    ReflectionsActions,
+    ProfileActions,
+  //  ReflectionsActions,
     GoogleProfileActions
 };
 
 export default [
     UserActions,
-    ReflectionsActions,
+    ProfileActions,
+    //ReflectionsActions,
     GoogleProfileActions
 ];

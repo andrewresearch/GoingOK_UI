@@ -11,9 +11,8 @@ import {AuthGuard} from "./services";
 import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
-    { path: 'projects', component: ProjectsComponent, children: [
-        { path: 'transition2teaching', component: T2tComponent }
-    ]},
+    { path: 'projects', component: ProjectsComponent},
+    { path: 'projects/transition2teaching', component: T2tComponent },
     { path: 'profile',component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'about', component: AboutComponent },

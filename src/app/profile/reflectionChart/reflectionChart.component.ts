@@ -5,7 +5,7 @@
 import { Component,Input,ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { curveBasis, curveMonotoneX} from "d3-shape";
-import {ReflectionEntry, Reflections} from "../../store/models/Reflections"; //curveLinear, curveBasisOpen, curveCatmullRomOpen, curveStep, curveCatmullRom,
+import {ReflectionEntry} from "../../store/models/Reflections"; //curveLinear, curveBasisOpen, curveCatmullRomOpen, curveStep, curveCatmullRom,
 //import {ReflectionEntry} from "../../data/ReflectionStore";
 
 @Component({
@@ -16,7 +16,7 @@ import {ReflectionEntry, Reflections} from "../../store/models/Reflections"; //c
 })
 export class ReflectionChartComponent {
 
-    @Input() reflections: Reflections;
+    @Input() reflections: ReflectionEntry[];
 //     chartdata = [
 // { timestamp:"2016-11-01T12:00:00", reflection:{ point: 50.0, text:"This is some text"}},
 // { timestamp:"2016-11-02T12:00:00", reflection:{ point: 100.0, text:"This is some text too."}},
@@ -40,9 +40,9 @@ export class ReflectionChartComponent {
     constructor() {}
 
     ngDoCheck() {
-        if (this.reflections.reflectionEntries.length != this.chartDataSize) {
-            this.chartDataSize = this.reflections.reflectionEntries.length;
-            this.buildChart(this.reflections.reflectionEntries);
+        if (this.reflections.length != this.chartDataSize) {
+            this.chartDataSize = this.reflections.length;
+            this.buildChart(this.reflections);
         }
     }
 

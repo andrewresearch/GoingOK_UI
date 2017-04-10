@@ -21,25 +21,19 @@ export class LoginComponent {
 
     ngAfterViewInit() {
 
-        gapi.signin2.render('my-signin2', {
+        gapi.signin2.render('my-signin2',{
             'onsuccess': param => this.onSignIn(param),
             'scope': 'profile email',
             'width': 240,
             'height': 50,
             'longtitle': true,
             'theme': 'light'
-
         });
     }
     onSignIn(googleUser) {
-        let profile = this.authService.onSignIn(googleUser);
-        this.cdr.detectChanges();
-        this.router.navigate(['profile']);
+        let profileResult = this.authService.onSignIn(googleUser);
     };
-    // signOut() {
-    //     this.authService.signOut()
-    //     this.fShowInfo = false;
-    // }
+
 
 
 }
