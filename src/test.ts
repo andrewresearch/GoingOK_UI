@@ -1,3 +1,4 @@
+/*
 import './polyfills.ts';
 
 import 'zone.js/dist/long-stack-trace-zone';
@@ -32,3 +33,4 @@ Promise.all([
   .then(context => context.keys().map(context))
   // Finally, start Karma to run the tests.
   .then(__karma__.start, __karma__.error);
+*/

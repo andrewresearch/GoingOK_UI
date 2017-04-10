@@ -5,7 +5,7 @@
 import {ReflectionEntry, Reflections} from "../models/Reflections";
 import {Action} from "@ngrx/store";
 import {ReflectionsActions} from "../actions";
-import {GokProfile} from "../models/GokProfile";
+import {Profile} from "../models";
 
 export type ReflectionsState = Reflections;
 
@@ -30,7 +30,7 @@ export default function (state = initialState, action: Action): ReflectionsState
         }
         case ReflectionsActions.GET_REFLECTIONS_SUCCESS: {
             console.log("Result of get Reflections: "+JSON.stringify(action.payload));
-            let profile = new GokProfile();
+            let profile = new Profile();
             profile = action.payload;
             console.log("Messages: "+JSON.stringify(profile.messages));
             console.log("Reflections: "+JSON.stringify(profile.reflectionEntries));

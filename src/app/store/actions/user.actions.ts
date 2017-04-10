@@ -31,18 +31,18 @@ export class UserActions {
     //     }
     // }
 
-    checkConnect(): Action {
-        return {
-            type: UserActions.CHECK_CONNECT
-        };
-    }
-
-    checkConnectResult(result):Action {
-        return {
-            type: UserActions.CHECK_CONNECT_RESULT,
-            payload: result
-        }
-    }
+    // checkConnect(): Action {
+    //     return {
+    //         type: UserActions.CHECK_CONNECT
+    //     };
+    // }
+    //
+    // checkConnectResult(result):Action {
+    //     return {
+    //         type: UserActions.CHECK_CONNECT_RESULT,
+    //         payload: result
+    //     }
+    // }
 
     authUser(token): Action {
         return {

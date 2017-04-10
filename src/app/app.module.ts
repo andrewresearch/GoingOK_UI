@@ -28,8 +28,9 @@ import { AboutComponent } from './about/about.component';
 //Login
 
 //Profile
-import { MessageComponent } from './message/message.component';
+//import { MessageComponent } from './message/message.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MessagesComponent } from './profile/messages/messages.component';
 import { EntryComponent } from './profile/entry/entry.component';
 import { SliderComponent } from './profile/entry/slider/slider.component';
 import { ReflectionChartComponent } from './profile/reflectionChart/reflectionChart.component';
@@ -48,8 +49,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   declarations: [
     AppComponent,
     NavbarComponent, LoginComponent, AboutComponent,
-    ProfileComponent,ReflectionChartComponent, EntryComponent, SliderComponent, ReflectionsComponent,
-    MessageComponent, PageNotFoundComponent,
+    ProfileComponent,MessagesComponent,ReflectionChartComponent, EntryComponent, SliderComponent, ReflectionsComponent,
+    PageNotFoundComponent,
     ProjectsComponent, T2tComponent
   ],
   imports: [

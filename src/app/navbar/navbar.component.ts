@@ -15,7 +15,7 @@ import {AuthenticationService} from "../services/authentication.service";
 export class NavbarComponent {
 
 
-    private authInfo;
+    //private authInfo;
 
 
     connectionIssues(): boolean {
@@ -28,12 +28,16 @@ export class NavbarComponent {
     ) {}
 
     ngOnInit() {
-        this.authInfo = this.authService.authInfo;
+       // this.authInfo = this.authService.authInfo;
+    }
+
+    isSignedIn() {
+        return this.authService.authInfo.signedIn;
     }
 
     public isNotProfilePage() {
         //console.log("location: "+this.router.url);
-        return !(this.router.url =='/profile');
+        return !(this.router.url =='/profile') && this.isSignedIn();
     }
 
     public isNotAboutPage() {
