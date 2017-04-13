@@ -8,6 +8,7 @@ import {AppState} from "../store/reducers";
 import {GoogleProfile,User} from "../store/models";
 import {GoogleProfileActions,UserActions} from "../store/actions";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 declare var gapi: any;
 
@@ -31,27 +32,64 @@ export class AuthenticationService {
     constructor(
         private store: Store<AppState>,
         private gpActions: GoogleProfileActions,
-        private uActions:UserActions
+        private uActions:UserActions,
+        private router: Router
     ) {
         this.gStore = store.select('googleProfile');
         this.uStore = store.select('user');
     }
 
+    INIT_PARAMS = { client_id: '1049767681335-rvm76el8aspacomur42uch1v0amgca5s.apps.googleusercontent.com' };
+    SIGNIN_PARAMS = { scope: 'profile email', prompt: 'select_account' };
 
-
-    onSignIn(googleUser) {
-        let profile = googleUser.getBasicProfile();
-        this.authInfo.gToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
-        this.updateGoogleProfile(profile);
-        //this.logProfileToConsole(profile);
-        //Now authorise with GoingOK server if necessary
-        this.authInfo.signedIn = true;
-        if(!this.authInfo.authorised || (this.authInfo.session=="")) {
-            console.info("User not authorised or session not set. Authorising with server...")
-            this.goingOkAuthorisation()
-        }
-        return profile;
+    googleInit = () => {
+        console.info("About to initialise gapi...")
+        gapi.auth2.init(this.INIT_PARAMS).then(this.googleSignIn(),this.googleInitError)
     }
+
+    googleInitError = (err) => { console.error("There was an error initialising Google Signin: "+JSON.stringify(err)); }
+
+    googleSignIn = () => {
+        console.info("Google Auth successfully initialised")
+        gapi.auth2.getAuthInstance()
+            .signIn(this.SIGNIN_PARAMS)
+            .then(this.googleSignInSuccess,this.googleSignInError);
+    }
+
+    googleSignInError = (err) => { console.error("There was a problem signing in the user" + err); }
+
+    googleSignInSuccess = () => {
+        let googleAuth = gapi.auth2.getAuthInstance();
+        let googleUser = googleAuth.currentUser.get();
+        let googleProfile = googleUser.getBasicProfile();
+        console.info("Successfully signed in user:",googleUser.getId());
+        //this.logProfileToConsole(googleProfile);
+        this.authInfo.gToken = googleUser.getAuthResponse().id_token;
+        console.info("gToken: "+this.authInfo.gToken)
+        this.updateGoogleProfile(googleProfile)
+        this.authInfo.signedIn = true;
+        if (!this.authInfo.authorised || (this.authInfo.session == "")) {
+           console.info("User not authorised or session not set. Authorising with server...")
+           this.goingOkAuthorisation()
+        }
+    }
+
+
+
+
+    // onSignIn(googleUser) {
+    //     let profile = googleUser.getBasicProfile();
+    //     this.authInfo.gToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+    //     this.updateGoogleProfile(profile);
+    //     //this.logProfileToConsole(profile);
+    //     //Now authorise with GoingOK server if necessary
+    //     this.authInfo.signedIn = true;
+    //     if(!this.authInfo.authorised || (this.authInfo.session=="")) {
+    //         console.info("User not authorised or session not set. Authorising with server...")
+    //         this.goingOkAuthorisation()
+    //     }
+    //     return profile;
+    // }
 
     signOut() {
         var auth2 = gapi.auth2.getAuthInstance();
@@ -74,6 +112,7 @@ export class AuthenticationService {
         //console.log("<<<< GOINGOK AUTH >>>>");
         this.store.dispatch(this.uActions.authUser(this.authInfo.gToken));
         this.authInfo.authorised = true;
+        this.router.navigate(['profile']);
     }
 
 

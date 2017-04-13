@@ -26,7 +26,7 @@
       <!--right nav -->
       <ul class="nav navbar-nav navbar-right">
         <li><a *ngIf="isSignedIn()" (click)="signOut()">Sign Out</a></li>
-        <li><a *ngIf="!isSignedIn()" routerLink="/login">Sign In</a></li>
+        <li><a *ngIf="!isSignedIn()" (click)="signIn()">Sign In</a></li>
       </ul>
 
     </div><!-- main nav content /.navbar-collapse -->

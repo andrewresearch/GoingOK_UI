@@ -2,9 +2,11 @@
  * Created by andrew on 6/06/2016.
  */
 
-import {Component} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
+
+declare var gapi: any;
 
 @Component({
     selector: 'navbar',
@@ -27,8 +29,12 @@ export class NavbarComponent {
         private authService: AuthenticationService
     ) {}
 
-    ngOnInit() {
-       // this.authInfo = this.authService.authInfo;
+    // ngAfterViewInit() {
+    //
+    // }
+
+    signIn() {
+        gapi.load('auth2', this.authService.googleInit);
     }
 
     isSignedIn() {
