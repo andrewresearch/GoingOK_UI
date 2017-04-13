@@ -53,7 +53,8 @@ export class ResearchChoices {
             {name: "University of New England", code: "UNE"},
             {name: "Central Queensland University", code: "CQU"},
             {name: "Federation University Australia", code: "FUA"},
-            {name: "Curtin University", code: "CUR"},
+            {name: "Murdoch University", code: "MUR"},
+            //{name: "Curtin University", code: "CUR"},
             {name: "Department of Education, Tasmania", code: "DET"},
             {name: "Department of Education, Queensland", code: "DEQ"},
         ];
