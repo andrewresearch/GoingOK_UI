@@ -33,7 +33,7 @@ export class AuthenticationService {
         private store: Store<AppState>,
         private gpActions: GoogleProfileActions,
         private uActions:UserActions,
-        private router: Router
+        private router: Router,
     ) {
         this.gStore = store.select('googleProfile');
         this.uStore = store.select('user');
@@ -42,30 +42,38 @@ export class AuthenticationService {
     INIT_PARAMS = { client_id: '1049767681335-rvm76el8aspacomur42uch1v0amgca5s.apps.googleusercontent.com' };
     SIGNIN_PARAMS = { scope: 'profile email', prompt: 'select_account' };
 
+    googleAuth;
+
     googleInit = () => {
-        console.info("About to initialise gapi...")
-        gapi.auth2.init(this.INIT_PARAMS).then(this.googleSignIn(),this.googleInitError)
+        console.info("Initialising Google API")
+        gapi.auth2.init(this.INIT_PARAMS).then(this.setGoogleAuth,this.googleInitError)
     }
 
     googleInitError = (err) => { console.error("There was an error initialising Google Signin: "+JSON.stringify(err)); }
 
+    setGoogleAuth = () => {
+        //console.info("Google sign-in successfully initialised");
+        this.googleAuth = gapi.auth2.getAuthInstance();
+    }
+
+
     googleSignIn = () => {
-        console.info("Google Auth successfully initialised")
-        gapi.auth2.getAuthInstance()
+        console.info("Attempting user sign-in with Google")
+        this.googleAuth
             .signIn(this.SIGNIN_PARAMS)
             .then(this.googleSignInSuccess,this.googleSignInError);
     }
 
-    googleSignInError = (err) => { console.error("There was a problem signing in the user" + err); }
+    googleSignInError = (err) => { console.error("There was a problem signing in the user",err); }
 
     googleSignInSuccess = () => {
         let googleAuth = gapi.auth2.getAuthInstance();
         let googleUser = googleAuth.currentUser.get();
         let googleProfile = googleUser.getBasicProfile();
-        console.info("Successfully signed in user:",googleUser.getId());
+        //console.info("Successfully signed in user:",googleUser.getId());
         //this.logProfileToConsole(googleProfile);
         this.authInfo.gToken = googleUser.getAuthResponse().id_token;
-        console.info("gToken: "+this.authInfo.gToken)
+        //console.info("gToken: "+this.authInfo.gToken)
         this.updateGoogleProfile(googleProfile)
         this.authInfo.signedIn = true;
         if (!this.authInfo.authorised || (this.authInfo.session == "")) {
@@ -74,8 +82,18 @@ export class AuthenticationService {
         }
     }
 
+    goingOkAuthorisation = () => {
+        //console.log("<<<< GOINGOK AUTH >>>>");
+        this.store.dispatch(this.uActions.authUser(this.authInfo.gToken));
+        this.authInfo.authorised = true;
+        //setTimeout(this.changeToProfilePage,2000);
 
+    }
 
+    // changeToProfilePage = () => {
+    //     this.router.navigate(['profile']);
+    //     //this.cdr.detectChanges();
+    // }
 
     // onSignIn(googleUser) {
     //     let profile = googleUser.getBasicProfile();
@@ -108,12 +126,7 @@ export class AuthenticationService {
 
     }
 
-    goingOkAuthorisation() {
-        //console.log("<<<< GOINGOK AUTH >>>>");
-        this.store.dispatch(this.uActions.authUser(this.authInfo.gToken));
-        this.authInfo.authorised = true;
-        this.router.navigate(['profile']);
-    }
+
 
 
 

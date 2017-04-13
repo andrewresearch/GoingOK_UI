@@ -45,6 +45,7 @@ export class ProfileComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.getProfile();
+        this.cdr.detectChanges();
     }
 
     public getProfile() {

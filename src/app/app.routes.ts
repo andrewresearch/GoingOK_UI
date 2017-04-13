@@ -16,9 +16,10 @@ const routes: Routes = [
     { path: 'projects/transition2teaching', component: T2tComponent },
     { path: 'profile',component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
-    { path: 'about', component: AboutComponent },
-    { path: 'help', component: HelpComponent },
-    { path: '', redirectTo: 'about', pathMatch: 'full' },
+    { path: 'about', component: HelpComponent },
+    // { path: 'help', component: HelpComponent },
+    { path: '', component: AboutComponent },
+    //{ path: '', redirectTo: 'about', pathMatch: 'full' },
     { path: 'errors/404', component: PageNotFoundComponent },
     { path: '**', component: PageNotFoundComponent }
 ];

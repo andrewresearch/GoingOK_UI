@@ -29,12 +29,12 @@ export class NavbarComponent {
         private authService: AuthenticationService
     ) {}
 
-    // ngAfterViewInit() {
-    //
-    // }
+    ngAfterViewInit() {
+        gapi.load('auth2', this.authService.googleInit);
+    }
 
     signIn() {
-        gapi.load('auth2', this.authService.googleInit);
+        this.authService.googleSignIn();
     }
 
     isSignedIn() {

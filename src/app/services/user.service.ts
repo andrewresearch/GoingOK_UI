@@ -19,8 +19,9 @@ export class UserService {
         //console.log("Authorising user with token: "+token);
         let response =  this.http.post(Gok.AUTH_URL,token);
         //response.map(res => console.log("SERVER RESPONSE: "+res.json()));
-        return response.map(this.sessionAndUser);
+        let usrResp = response.map(this.sessionAndUser);
             //.catch(this._serverError);
+        return usrResp;
     }
 
     sessionAndUser = (response:Response): UserResponse => {
