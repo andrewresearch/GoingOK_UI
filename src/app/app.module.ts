@@ -25,6 +25,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
+import { HelpComponent } from './help/help.component';
 
 //Login
 
@@ -52,7 +53,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent, LoginComponent, AboutComponent,
+    NavbarComponent, LoginComponent, AboutComponent, HelpComponent,
     ProfileComponent,MessagesComponent,ReflectionChartComponent, EntryComponent, SliderComponent, ReflectionsComponent,ResearchComponent,
     PageNotFoundComponent,
     ProjectsComponent, T2tComponent

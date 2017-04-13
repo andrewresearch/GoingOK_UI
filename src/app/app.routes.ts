@@ -9,6 +9,7 @@ import {AboutComponent} from "./about/about.component";
 import {PageNotFoundComponent} from "./message/pageNotFound/pageNotFound.component";
 import {AuthGuard} from "./services";
 import {LoginComponent} from "./login/login.component";
+import {HelpComponent} from "./help/help.component";
 
 const routes: Routes = [
     { path: 'projects', component: ProjectsComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'profile',component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'about', component: AboutComponent },
+    { path: 'help', component: HelpComponent },
     { path: '', redirectTo: 'about', pathMatch: 'full' },
     { path: 'errors/404', component: PageNotFoundComponent },
     { path: '**', component: PageNotFoundComponent }

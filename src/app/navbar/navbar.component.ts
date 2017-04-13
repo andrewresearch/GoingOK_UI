@@ -45,6 +45,16 @@ export class NavbarComponent {
         return !(this.router.url =='/about');
     }
 
+    public isNotHelpPage() {
+        //console.log("location: "+this.router.url);
+        return !(this.router.url =='/help');
+    }
+
+    public isNotProjectsPage() {
+        //console.log("location: "+this.router.url);
+        return !(this.router.url =='/projects');
+    }
+
     public signOut() {
         this.authService.signOut();
         this.router.navigate(['']);

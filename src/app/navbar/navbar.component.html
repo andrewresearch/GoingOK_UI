@@ -17,6 +17,9 @@
       <ul id="main-menu" class="nav navbar-nav">
         <li><a *ngIf="isNotAboutPage()" routerLink="about">About</a></li>
         <li><a *ngIf="isNotProfilePage()" routerLink="profile">Profile</a></li>
+        <li><a *ngIf="isNotProjectsPage()" routerLink="projects">Projects</a></li>
+        <li><a *ngIf="isNotHelpPage()" routerLink="help">Help</a></li>
+
         <!--<li><a><small>| S: {{authInfo?.signedIn}} | A: {{authInfo?.authorised}} |</small></a></li>-->
         <li><a *ngIf="connectionIssues()" class="label label-danger">WARNING: GoingOK is unable to connect to the server and may not function correctly.</a></li>
       </ul>
